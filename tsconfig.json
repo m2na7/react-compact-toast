@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "useDefineForClassFields": true,
+    "isolatedModules": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "downlevelIteration": true,
+    "incremental": true,
+    "useUnknownInCatchVariables": false,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "composite": true,
+    "outDir": "lib"
+  },
+  "include": [
+    "src",
+    "**/*",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/app.tsx",
+    "src/index.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "src/__tests__",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.config.ts",
+    "**/*.build.js",
+    "jest.config.js",
+    "jest.setup.ts",
+    "src/temp.tsx"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
