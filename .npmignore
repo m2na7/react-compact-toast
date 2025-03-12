@@ -1,0 +1,23 @@
+// .npmignore
+
+# folders
+
+node_modules
+src
+.husky
+
+# configs
+
+.eslintrc.json
+.gitignore
+.swcrc
+tsconfig.json
+tsconfig.node.json
+jest.config.js
+jest.setup.ts
+cypress.config.ts
+
+# local application
+
+index.tsx
+app.tsx

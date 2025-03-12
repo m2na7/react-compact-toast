@@ -1,5 +1,5 @@
 {
-  "name": "@m2na7/react-compact-toast",
+  "name": "react-compact-toast",
   "version": "0.1.0",
   "private": false,
   "repository": "https://github.com/m2na7/react-compact-toast.git",
@@ -38,13 +38,15 @@
     "@testing-library/user-event": "^13.5.0",
     "esbuild": "^0.25.1",
     "esbuild-css-modules-plugin": "^3.1.4",
-    "react-scripts": "5.0.1"
-  },
-  "peerDependencies": {
+    "react-scripts": "5.0.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
   }
 }
