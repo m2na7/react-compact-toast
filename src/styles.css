@@ -1,0 +1,144 @@
+@keyframes toastEnterFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastExitToBottom {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes toastEnterFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastExitToTop {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+.toast {
+  position: relative;
+  width: 320px;
+  height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 24px;
+  background-color: white;
+  color: #121212;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: auto;
+}
+
+.toast-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.toast-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-line;
+  max-width: 270px;
+}
+
+.toast-highlight-text {
+  color: #a9e34b;
+}
+
+.toast-enter-top {
+  animation: toastEnterFromTop 0.5s ease-out forwards;
+}
+
+.toast-exit-top {
+  animation: toastExitToTop 0.5s ease-in forwards;
+}
+
+.toast-enter-bottom {
+  animation: toastEnterFromBottom 0.5s ease-out forwards;
+}
+
+.toast-exit-bottom {
+  animation: toastExitToBottom 0.5s ease-in forwards;
+}
+
+.toast-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100vw;
+  position: fixed;
+  z-index: 1000;
+}
+
+/* Position variants */
+.toast-position-bottomCenter {
+  align-items: center;
+  bottom: 30px;
+  left: 0;
+}
+
+.toast-position-bottomLeft {
+  align-items: flex-start;
+  bottom: 30px;
+  left: 20px;
+}
+
+.toast-position-bottomRight {
+  align-items: flex-end;
+  bottom: 30px;
+  right: 20px;
+}
+
+.toast-position-topCenter {
+  align-items: center;
+  left: 0;
+  top: 30px;
+}
+
+.toast-position-topLeft {
+  align-items: flex-start;
+  left: 20px;
+  top: 30px;
+}
+
+.toast-position-topRight {
+  align-items: flex-end;
+  right: 20px;
+  top: 30px;
+}
