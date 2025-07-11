@@ -4,10 +4,14 @@ coverage:
       default:
         target: 80%
         threshold: 1%
+        flags:
+          - unittests
     patch:
       default:
         target: 80%
         threshold: 1%
+        flags:
+          - unittests
 
   ignore:
     - 'src/**/*.cy.tsx'
@@ -24,9 +28,23 @@ coverage:
     - 'lib/**/*'
     - 'build/**/*'
 
+flags:
+  unittests:
+    paths:
+      - src/
+
 comment:
-  layout: 'header, diff, files'
+  layout: 'header, diff, flags, files, footer'
   behavior: default
   require_changes: false
   require_base: false
   require_head: false
+  show_carryforward_flags: false
+  hide_project_coverage: false
+  after_n_builds: 1
+
+component_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: 80%
