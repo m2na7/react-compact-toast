@@ -8,7 +8,7 @@ export default function Stats() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <span className="text-gray-400 text-sm">Bundle Size</span>
-          <span className="text-green-400 font-semibold text-sm">~57.8 KB</span>
+          <span className="text-green-400 font-semibold text-sm">~2.7 kB</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-gray-400 text-sm">Dependencies</span>
