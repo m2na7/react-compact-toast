@@ -4,14 +4,27 @@
   "private": false,
   "repository": "https://github.com/m2na7/react-compact-toast.git",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pack:build": "node ./build.esbuild.js",
-    "pack:build:tsc": "tsc --project ./tsconfig.package.json"
+    "build:lib": "tsup",
+    "dev:lib": "tsup --watch"
   },
   "eslintConfig": {
     "extends": [
@@ -36,17 +49,20 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
-    "esbuild": "^0.25.1",
-    "esbuild-css-modules-plugin": "^3.1.4",
     "react-scripts": "5.0.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "tsup": "^8.0.0"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
     "react-dom": "^18 || ^19"
-  }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@10.12.0"
 }

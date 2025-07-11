@@ -16,24 +16,17 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "downlevelIteration": true,
-    "incremental": true,
     "useUnknownInCatchVariables": false,
     "jsx": "react-jsx",
     "declaration": true,
-    "composite": true,
     "outDir": "lib"
   },
-  "include": [
-    "src",
-    "**/*",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/app.tsx",
-    "src/index.tsx"
-  ],
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "lib",
+    "dist",
+    "build",
     "src/__tests__",
     "**/*.spec.ts",
     "**/*.spec.tsx",
@@ -41,7 +34,7 @@
     "**/*.build.js",
     "jest.config.js",
     "jest.setup.ts",
-    "src/temp.tsx"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+    "src/App.tsx",
+    "src/index.tsx"
+  ]
 }

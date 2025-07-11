@@ -1,23 +1,39 @@
 // .npmignore
 
-# folders
+# Source files
+src/
+public/
+build/
 
-node_modules
-src
-.husky
-
-# configs
-
+# Config files
+tsconfig.json
+tsconfig.node.json
+tsup.config.ts
+build.esbuild.js
 .eslintrc.json
 .gitignore
 .swcrc
-tsconfig.json
-tsconfig.node.json
 jest.config.js
 jest.setup.ts
 cypress.config.ts
 
-# local application
+# Development files
+*.test.*
+*.spec.*
+*.stories.*
+.DS_Store
 
+# Folders
+node_modules/
+.husky/
+.git/
+.github/
+
+# Local application files
 index.tsx
-app.tsx
+App.tsx
+
+# Development scripts
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
