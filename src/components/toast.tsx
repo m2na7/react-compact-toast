@@ -36,6 +36,10 @@ const Toast = ({
   const getToastClasses = () => {
     let classes = 'toast';
 
+    if (!className) {
+      classes += ' toast-default-style';
+    }
+
     if (isTopPosition) {
       classes += ' toast-top-position';
     }

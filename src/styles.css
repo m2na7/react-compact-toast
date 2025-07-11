@@ -51,16 +51,19 @@
   justify-content: center;
   align-items: center;
 
-  border-radius: 24px;
-  background-color: white;
-  color: #121212;
   text-align: center;
-  z-index: 1000;
+  z-index: 9999;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
 
   cursor: pointer;
   pointer-events: auto;
   touch-action: auto;
+}
+
+.toast-default-style {
+  background-color: white;
+  color: #121212;
+  border-radius: 24px;
 }
 
 .toast-content {
