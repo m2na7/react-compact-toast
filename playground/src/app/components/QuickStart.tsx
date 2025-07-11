@@ -10,7 +10,6 @@ export default function QuickStart() {
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 2000);
 
-      // Show toast notification in different positions based on button id
       let position: 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight' = 'topRight';
 
       switch (id) {
@@ -236,15 +235,17 @@ toast({
                   {'\n  '}
                   <span className="text-cyan-400">icon</span>: <span className="text-green-400">{'<Icon />'}</span>,
                   {'\n  '}
-                  <span className="text-cyan-400">position</span>: <span className="text-green-400">'topRight'</span>,
+                  <span className="text-cyan-400">highlightText</span>: <span className="text-green-400">'Custom'</span>,
+                  {'\n  '}
+                  <span className="text-cyan-400">highlightColor</span>: <span className="text-green-400">'#FF6B6B'</span>,
                   {'\n  '}
                   <span className="text-cyan-400">autoClose</span>: <span className="text-orange-400">5000</span>,
                   {'\n  '}
                   <span className="text-cyan-400">closeOnClick</span>: <span className="text-orange-400">true</span>,
                   {'\n  '}
-                  <span className="text-cyan-400">className</span>: <span className="text-green-400">'bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl'</span>,
+                  <span className="text-cyan-400">position</span>: <span className="text-green-400">'topRight'</span>,
                   {'\n  '}
-                  <span className="text-cyan-400">highlightText</span>: <span className="text-green-400">'Custom'</span>
+                  <span className="text-cyan-400">className</span>: <span className="text-green-400">'bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl'</span>
                   {'\n'}{'}'};
                   {'\n\n'}
                   <span className="text-gray-500">// Available positions:</span>
