@@ -1,0 +1,12 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "develop": true
+    }
+  },
+  "github": {
+    "autoJobCancelation": true
+  },
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- playground/"
+}
