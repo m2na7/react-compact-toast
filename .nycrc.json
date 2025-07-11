@@ -1,19 +1,13 @@
 {
-  "extends": "@cypress/code-coverage/nyc-config",
-  "include": ["src/**/*.{js,jsx,ts,tsx}"],
-  "exclude": [
-    "src/**/*.cy.{js,jsx,ts,tsx}",
-    "src/**/*.test.{js,jsx,ts,tsx}",
-    "src/**/*.spec.{js,jsx,ts,tsx}",
-    "src/index.ts",
-    "src/app/**/*"
-  ],
-  "reporter": ["text", "json", "html", "lcov"],
-  "report-dir": "coverage",
   "all": true,
+  "extends": "@istanbuljs/nyc-config-typescript",
   "check-coverage": true,
-  "branches": 80,
-  "functions": 80,
-  "lines": 80,
-  "statements": 80
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": [
+    "cypress/**/*.*",
+    "src/types.ts",
+    "**/*.d.ts",
+    "**/*.cy.tsx",
+    "**/*.cy.ts"
+  ]
 }

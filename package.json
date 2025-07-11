@@ -39,7 +39,7 @@
     "test:open": "cypress open",
     "test:headless": "cypress run --component --headless",
     "test:coverage": "cypress run --component --headless",
-    "coverage:open": "open coverage/index.html",
+    "coverage:open": "open coverage/lcov-report/index.html",
     "coverage:reset": "rm -rf coverage .nyc_output",
     "eject": "react-scripts eject",
     "build:lib": "tsup",
@@ -89,7 +89,9 @@
     "react-scripts": "5.0.1",
     "tsup": "^8.0.0",
     "typescript": "^5.8.2",
-    "vite": "^5.4.19"
+    "vite": "^6.0.3",
+    "vite-plugin-istanbul": "^6.0.2",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
