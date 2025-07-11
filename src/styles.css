@@ -44,8 +44,8 @@
 
 .toast {
   position: relative;
-  width: 320px;
-  height: 50px;
+  min-width: 320px;
+  min-height: 50px;
 
   display: flex;
   justify-content: center;

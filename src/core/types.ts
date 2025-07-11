@@ -15,6 +15,7 @@ export type ToastProps = {
   icon?: React.JSX.Element | string | 'default';
   className?: string;
   highlightText?: string;
+  highlightColor?: string;
 };
 
 export const enum ToastEvent {
