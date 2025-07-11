@@ -19,9 +19,10 @@
     "useUnknownInCatchVariables": false,
     "jsx": "react-jsx",
     "declaration": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    "baseUrl": "."
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "cypress/**/*"],
   "exclude": [
     "node_modules",
     "lib",
