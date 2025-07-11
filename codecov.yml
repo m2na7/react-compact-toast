@@ -1,0 +1,30 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 1%
+    patch:
+      default:
+        target: 80%
+        threshold: 1%
+
+  ignore:
+    - 'src/**/*.cy.tsx'
+    - 'src/**/*.cy.ts'
+    - 'src/**/*.test.tsx'
+    - 'src/**/*.test.ts'
+    - 'src/**/*.spec.tsx'
+    - 'src/**/*.spec.ts'
+    - 'src/index.ts'
+    - 'src/app/**/*'
+    - 'playground/**/*'
+    - 'cypress/**/*'
+    - 'dist/**/*'
+    - 'lib/**/*'
+    - 'build/**/*'
+
+comment:
+  layout: 'reach, diff, flags, files'
+  behavior: default
+  require_changes: true
