@@ -1,4 +1,4 @@
-import { toast } from '../../../../src';
+import { toast } from 'react-compact-toast';
 
 export default function InteractiveDemo() {
   const showSimpleToast = () => {
