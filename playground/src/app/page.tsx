@@ -7,6 +7,7 @@ import InteractiveDemo from './components/InteractiveDemo';
 import Features from './components/Features';
 import Stats from './components/Stats';
 import Footer from './components/Footer';
+import ActionButtons from './components/ActionButtons';
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <div className="max-w-6xl w-full">
           <Header />
 
+          <ActionButtons />
 
           {/* Main Content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -7,7 +7,7 @@ export default function InteractiveDemo() {
 
   const showWithIcon = () => {
     toast({
-      text: 'Toast with custom icon',
+      text: 'with custom icon',
       icon: '🚀',
       position: 'topRight',
       className: 'bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-2xl shadow-2xl',
@@ -18,7 +18,7 @@ export default function InteractiveDemo() {
   const showNoAutoClose = () => {
     toast({
       text: 'Click to close !',
-      position: 'bottomCenter',
+      position: 'topCenter',
       className: 'bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-2xl shadow-2xl',
       autoClose: false,
       closeOnClick: true,
@@ -28,20 +28,20 @@ export default function InteractiveDemo() {
   const showCustomPosition = () => {
     toast({
       text: 'Bottom left positioned toast',
-      icon: '📍',
       position: 'bottomLeft',
       className: 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-2xl shadow-2xl',
-      autoClose: 4000,
+      autoClose: 5000,
     });
   };
 
   const showCustomStyle = () => {
     toast({
-      text: 'Custom styled toast with gradients',
-      icon: '🎨',
+      text: ' uploaded and processed. Click here to view details or dismiss this notification.',
       position: 'topLeft',
-      className: 'bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold rounded-3xl shadow-2xl border-2 border-white/20',
-      autoClose: 6000,
+      className: 'w-100 h-32 bg-white text-gray-800 rounded-2xl shadow-2xl border-l-8 border-green-500 p-6 flex flex-col justify-between hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1',
+      highlightText: 'Successfully',
+      highlightColor: '#10B981',
+      autoClose: 10000,
     });
   };
 
@@ -52,6 +52,7 @@ export default function InteractiveDemo() {
       position: 'bottomRight',
       className: 'bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold rounded-2xl shadow-2xl',
       highlightText: 'Highlighted',
+      highlightColor: '#FFD700',
       autoClose: 5000,
     });
   };

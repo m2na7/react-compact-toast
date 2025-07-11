@@ -4,6 +4,20 @@
   "private": false,
   "repository": "https://github.com/m2na7/react-compact-toast.git",
   "license": "MIT",
+  "author": "m2na7",
+  "description": "A tiny, compact, and fully customizable toast notification library.",
+  "keywords": [
+    "react",
+    "toast",
+    "notification",
+    "react-compact-toast",
+    "compact",
+    "customizable",
+    "react-toast",
+    "snackbar",
+    "message",
+    "alert"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -74,11 +88,5 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "pnpm@10.12.0",
-  "pnpm": {
-    "overrides": {
-      "react": "^19.1.0",
-      "react-dom": "^19.1.0"
-    }
-  }
+  "packageManager": "pnpm@10.12.0"
 }
