@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { TOAST_DEFAULT_POSITION } from '../constants';
 import { eventManager, ToastEvent, ToastPosition, ToastProps } from '../core';
@@ -6,15 +6,15 @@ import { eventManager, ToastEvent, ToastPosition, ToastProps } from '../core';
 export const useToastContainer = () => {
   const [toastList, setToastList] = useState(new Map<string, ToastProps>());
 
-  const addToast = (props: ToastProps) => {
+  const addToast = useCallback((props: ToastProps) => {
     setToastList((prev) => {
       const newMap = new Map(prev);
       newMap.set(props.toastId, props);
       return newMap;
     });
-  };
+  }, []);
 
-  const deleteToast = (id: string) => {
+  const deleteToast = useCallback((id: string) => {
     setToastList((prev) => {
       if (!prev.has(id)) return prev;
 
@@ -22,9 +22,9 @@ export const useToastContainer = () => {
       newMap.delete(id);
       return newMap;
     });
-  };
+  }, []);
 
-  const updateToast = (id: string, text: string) => {
+  const updateToast = useCallback((id: string, text: string) => {
     setToastList((prev) => {
       if (!prev.has(id)) return prev;
 
@@ -33,7 +33,7 @@ export const useToastContainer = () => {
       newMap.set(id, { ...toast, text });
       return newMap;
     });
-  };
+  }, []);
 
   useEffect(() => {
     eventManager.on(ToastEvent.Add, addToast);
@@ -51,7 +51,7 @@ export const useToastContainer = () => {
     };
   }, [addToast, deleteToast, updateToast]);
 
-  const getToastPositionGroupToRender = () => {
+  const getToastPositionGroupToRender = useCallback(() => {
     const positionGroup = new Map<ToastPosition, ToastProps[]>();
 
     toastList.forEach((toast) => {
@@ -64,7 +64,7 @@ export const useToastContainer = () => {
     });
 
     return positionGroup;
-  };
+  }, [toastList]);
 
   return { getToastPositionGroupToRender };
 };

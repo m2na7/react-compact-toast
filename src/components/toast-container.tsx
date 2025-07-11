@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo, Fragment } from 'react';
 
 import Toast from './toast';
 import { useToastContainer } from '../hooks/use-toast-container';
@@ -11,16 +11,20 @@ const ToastContainer = () => {
         [getToastPositionGroupToRender],
     );
 
-    return Array.from(positionGroup).map(([position, toasts]) => (
-        <div
-            key={position}
-            className={`toast-container toast-position-${position}`}
-        >
-            {toasts.map((toastProps) => (
-                <Toast key={toastProps.toastId} {...toastProps} />
+    return (
+        <Fragment>
+            {Array.from(positionGroup).map(([position, toasts]) => (
+                <div
+                    key={position}
+                    className={`toast-container toast-position-${position}`}
+                >
+                    {toasts.map((toastProps) => (
+                        <Toast key={toastProps.toastId} {...toastProps} />
+                    ))}
+                </div>
             ))}
-        </div>
-    ));
+        </Fragment>
+    );
 };
 
 export default memo(ToastContainer);
