@@ -24,6 +24,10 @@ const Toast = ({
   const isTopPosition = position.startsWith('top');
 
   const renderIcon = () => {
+    if (!icon) {
+      return null;
+    }
+
     switch (icon) {
       case 'default':
         return icon;
