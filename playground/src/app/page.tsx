@@ -1,6 +1,8 @@
-import { toast, ToastContainer } from '../../src';
+'use client'
 
-function App() {
+import { toast, ToastContainer } from '../../../src';
+
+export default function Home() {
   const showSimpleToast = () => {
     toast('Hello! This is a simple toast! 🎉');
   };
@@ -51,7 +53,7 @@ function App() {
           🍞 React Compact Toast Playground
         </h1>
         <p className="text-lg md:text-xl mb-8 opacity-90">
-          Test different toast configurations with Vite + Tailwind!
+          Test different toast configurations with Next.js + Tailwind!
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -123,6 +125,4 @@ function App() {
       <ToastContainer />
     </div>
   );
-}
-
-export default App;
+} 
