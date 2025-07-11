@@ -12,29 +12,17 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
-      - run: npm install
-      - run: npm run pack:build
-      - run: npm run pack:build:tsc
-      - run: mv ./index.ts ./index.d.ts
-      - run: rm -rf ./src
-      - run: rm -rf ./public
-      - run: rm -rf ./.github
-      - run: rm -rf ./package-lock.json
-      - run: rm -rf ./tailwind.config.js
-      - run: rm -rf ./postcss.config.js
-      - run: rm -rf ./tsconfig.json
-      - run: rm -rf ./tsconfig.package.json
-      - run: rm -rf ./build.esbuild.js
-      - run: rm -rf ./next.config.js
-      - run: rm -rf ./next-env.d.ts
-      - run: rm -rf ./.eslintrc.json
-      - run: mv ./lib/src ./src
-      - run: rm -rf ./lib
-      - run: npm publish
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm run build:lib
+      - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.PACKAGE_PUBLISH_KEY_GITHUB}}
