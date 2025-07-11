@@ -7,12 +7,13 @@ import '../styles.css';
 const Toast = ({
   toastId,
   text,
+  icon,
+  highlightText,
+  highlightColor,
   autoClose = 3000,
   closeOnClick = true,
   position = TOAST_DEFAULT_POSITION,
-  icon,
   className,
-  highlightText,
 }: ToastProps) => {
   const { isExiting, handleAnimationEnd, handleClick } = useToast(
     toastId,
@@ -37,7 +38,7 @@ const Toast = ({
     let classes = 'toast';
 
     if (!className) {
-      classes += ' toast-default-style';
+      classes += ' toast-default-style toast-default-size';
     }
 
     if (isTopPosition) {
@@ -66,7 +67,12 @@ const Toast = ({
       <div className="toast-content">
         {renderIcon()}
         <p className="toast-text">
-          <span className="toast-highlight-text">{highlightText}</span>
+          <span
+            className="toast-highlight-text"
+            style={highlightColor ? { color: highlightColor } : undefined}
+          >
+            {highlightText}
+          </span>
           {text}
         </p>
       </div>
