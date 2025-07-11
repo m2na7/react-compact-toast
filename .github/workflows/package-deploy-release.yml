@@ -23,6 +23,6 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm run build:lib
-      - run: pnpm publish --access=public
+      - run: pnpm publish --access=public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.PACKAGE_PUBLISH_KEY_NPM}}
