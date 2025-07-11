@@ -1,0 +1,19 @@
+name: Bug Report
+description: Report a bug
+title: '[BUG] '
+labels: ['bug']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the bug
+    validations:
+      required: true
+
+  - type: textarea
+    id: ETC
+    attributes:
+      label: ETC
+    validations:
+      required: false
