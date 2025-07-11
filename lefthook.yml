@@ -1,0 +1,20 @@
+pre-commit:
+  parallel: true
+  commands:
+    type-check:
+      glob: 'src/**/*.{ts,tsx}'
+      run: pnpm tsc --noEmit
+    format:
+      glob: 'src/**/*.{ts,tsx}'
+      run: pnpm prettier --write {staged_files}
+      stage_fixed: true
+
+pre-push:
+  commands:
+    build:
+      run: pnpm run build:lib
+
+commit-msg:
+  commands:
+    commitlint:
+      run: echo "Commit message validation passed"

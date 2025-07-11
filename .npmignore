@@ -9,13 +9,8 @@ build/
 tsconfig.json
 tsconfig.node.json
 tsup.config.ts
-build.esbuild.js
-.eslintrc.json
 .gitignore
 .swcrc
-jest.config.js
-jest.setup.ts
-cypress.config.ts
 
 # Development files
 *.test.*
