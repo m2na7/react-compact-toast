@@ -38,6 +38,9 @@
     "test": "cypress run --component",
     "test:open": "cypress open",
     "test:headless": "cypress run --component --headless",
+    "test:coverage": "cypress run --component --headless",
+    "coverage:open": "open coverage/index.html",
+    "coverage:reset": "rm -rf coverage .nyc_output",
     "eject": "react-scripts eject",
     "build:lib": "tsup",
     "dev:lib": "tsup --watch",
@@ -70,6 +73,7 @@
     "singleQuote": true
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.14.5",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
@@ -80,6 +84,7 @@
     "cypress": "^14.5.1",
     "lefthook": "^1.12.1",
     "lint-staged": "^16.1.2",
+    "nyc": "^17.1.0",
     "prettier": "^3.6.2",
     "react-scripts": "5.0.1",
     "tsup": "^8.0.0",
