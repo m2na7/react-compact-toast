@@ -1,32 +1,20 @@
-coverage:
-  status:
-    project:
-      default:
-        target: 80%
-        threshold: 1%
-    patch:
-      default:
-        target: 80%
-        threshold: 1%
-
-  ignore:
-    - 'src/**/*.cy.tsx'
-    - 'src/**/*.cy.ts'
-    - 'src/**/*.test.tsx'
-    - 'src/**/*.test.ts'
-    - 'src/**/*.spec.tsx'
-    - 'src/**/*.spec.ts'
-    - 'src/index.ts'
-    - 'src/app/**/*'
-    - 'playground/**/*'
-    - 'cypress/**/*'
-    - 'dist/**/*'
-    - 'lib/**/*'
-    - 'build/**/*'
+# coverage:
+#   status:
+#     project:
+#       default:
+#         target: 80%
+#         threshold: 1%
+#     patch:
+#       default:
+#         target: 80%
+#         threshold: 1%
 
 comment:
-  layout: 'header, diff, files'
+  layout: 'header, diff, flags, files, footer'
   behavior: default
   require_changes: false
   require_base: false
   require_head: false
+  show_carryforward_flags: false
+  hide_project_coverage: false
+  after_n_builds: 1
