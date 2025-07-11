@@ -24,13 +24,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:lib": "tsup",
-    "dev:lib": "tsup --watch"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "dev:lib": "tsup --watch",
+    "playground": "cd playground && pnpm start",
+    "playground:install": "pnpm install",
+    "prettier": "prettier --write src"
   },
   "browserslist": {
     "production": [
@@ -44,18 +41,25 @@
       "last 1 safari version"
     ]
   },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "arrowParens": "avoid"
+  },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
-    "react-scripts": "5.0.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "typescript": "^5.8.2",
-    "tsup": "^8.0.0"
+    "prettier": "^3.6.2",
+    "react-scripts": "5.0.1",
+    "tsup": "^8.0.0",
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
