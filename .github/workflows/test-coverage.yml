@@ -45,10 +45,26 @@ jobs:
       - name: Type check
         run: pnpm type-check
 
-      - name: Run tests with coverage
+      - name: Run Cypress component tests with coverage
         run: pnpm test:coverage
 
-      - name: Upload coverage reports to Codecov
+      - name: Run Vitest unit tests with coverage
+        run: pnpm test:unit:coverage
+
+      - name: Upload Cypress coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+          flags: cypress
+          name: cypress-coverage
+          fail_ci_if_error: true
+
+      - name: Upload Vitest coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage-vitest/lcov.info
+          flags: vitest
+          name: vitest-coverage
+          fail_ci_if_error: false
