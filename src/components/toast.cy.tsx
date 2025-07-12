@@ -1,5 +1,5 @@
 import Toast from './toast';
-import { ToastProps } from '../core/types';
+import { ToastProps } from '../types';
 
 describe('Toast Component', () => {
   const defaultProps: ToastProps = {

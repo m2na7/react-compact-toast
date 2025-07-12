@@ -1,20 +1,39 @@
-# coverage:
-#   status:
-#     project:
-#       default:
-#         target: 80%
-#         threshold: 1%
-#     patch:
-#       default:
-#         target: 80%
-#         threshold: 1%
+coverage:
+  status:
+    project:
+      default:
+        target: 70%
+        threshold: 1%
+    patch:
+      default:
+        target: 70%
+        threshold: 1%
+  ignore:
+    - 'src/**/*.cy.tsx'
+    - 'src/**/*.test.ts'
+    - 'src/**/*.test.tsx'
+    - 'src/components/**/*'
+    - 'src/types/**/*'
+    - 'cypress/**/*'
+    - 'playground/**/*'
 
 comment:
   layout: 'header, diff, flags, files, footer'
   behavior: default
   require_changes: false
   require_base: false
-  require_head: false
-  show_carryforward_flags: false
+  require_head: true
+  show_carryforward_flags: true
   hide_project_coverage: false
   after_n_builds: 1
+
+flags:
+  cypress:
+    paths:
+      - src/components/
+    carryforward: true
+  vitest:
+    paths:
+      - src/core/
+      - src/hooks/
+    carryforward: true
