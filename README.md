@@ -1,26 +1,24 @@
-# React Compact Toast
 
-<img width="150" height="150" alt="icon" src="https://github.com/user-attachments/assets/e709a9fc-de08-4f64-9312-9c2011a6e17f" />
-
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e709a9fc-de08-4f64-9312-9c2011a6e17f" alt="Shizue Logo" width="64" />
+  <h1>React Compact Toast</h1>
+  <div align="center">
 
 [![npm version](https://badge.fury.io/js/react-compact-toast.svg)](https://badge.fury.io/js/react-compact-toast)
 [![npm downloads](https://img.shields.io/npm/dt/react-compact-toast.svg)](https://npmjs.com/package/react-compact-toast)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<p align="center">
-  <strong>A tiny, compact, and fully customizable toast notification library for React applications.</strong>
-</p>
+</div>
+  <p>A tiny, compact, and fully customizable toast notification library for React applications.</p>
+</div>
 
-
-<p align="center">
-  <a href="https://react-compact-toast.vercel.app" target="_blank"><strong>🔗 Website</strong></a>
-  <span> • </span>
-  <a href="https://react-compact-toast.vercel.app/docs" target="_blank"><strong>📘 Docs</strong></a>
-  <span> • </span>
-  <a href="https://www.npmjs.com/package/react-compact-toast?activeTab=readme" target="_blank"><strong>📦 npm</strong></a>
-</p>
-
-<br />
+<div align="center">
+  <p>
+    <a style="font-size: 28px" href="https://react-compact-toast.vercel.app">
+      🍞 WebSite 
+    </a>
+  </p>
+</div>
 
 
 ## ✨ Features
