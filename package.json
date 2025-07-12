@@ -38,7 +38,7 @@
     "test": "cypress run --component",
     "test:open": "cypress open",
     "test:headless": "cypress run --component --headless",
-    "test:coverage": "cypress run --component --headless",
+    "test:coverage": "cypress run --component --headless && nyc report --reporter=lcov",
     "test:unit": "vitest",
     "test:unit:ui": "vitest --ui",
     "test:unit:run": "vitest run",

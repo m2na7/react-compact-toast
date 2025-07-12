@@ -22,10 +22,10 @@ comment:
   behavior: default
   require_changes: false
   require_base: false
-  require_head: false
+  require_head: true
   show_carryforward_flags: true
   hide_project_coverage: false
-  after_n_builds: 2
+  after_n_builds: 1
 
 flags:
   cypress:
