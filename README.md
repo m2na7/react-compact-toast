@@ -4,9 +4,11 @@
   <h1>React Compact Toast</h1>
   <div align="center">
 
-[![npm version](https://badge.fury.io/js/react-compact-toast.svg)](https://badge.fury.io/js/react-compact-toast)
-[![npm downloads](https://img.shields.io/npm/dt/react-compact-toast.svg)](https://npmjs.com/package/react-compact-toast)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![npm](https://img.shields.io/npm/v/react-compact-toast.svg?logo=npm)
+[![npm downloads](https://img.shields.io/npm/dt/react-compact-toast.svg?color=yellow)](https://npmjs.com/package/react-compact-toast)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://codecov.io/gh/m2na7/react-compact-toast/graph/badge.svg?token=YWV9W9GTVN)](https://codecov.io/gh/m2na7/react-compact-toast)
+
 
 </div>
   <p>A tiny, compact, and fully customizable toast notification library for React applications.</p>
