@@ -17,4 +17,4 @@ export type {
   EventCallbacks,
   TimeoutId,
   EventManager,
-} from './core/types';
+} from './types';

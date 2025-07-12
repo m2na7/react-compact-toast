@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { toast } from './toast';
 import { eventManager } from './event-manager';
-import { ToastEvent } from './types';
+import { ToastEvent } from '../types';
 
 vi.mock('./event-manager', () => ({
   eventManager: {

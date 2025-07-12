@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useToast } from './use-toast';
 import { eventManager } from '../core/event-manager';
-import { ToastEvent } from '../core/types';
+import { ToastEvent } from '../types';
 
 vi.mock('../core/event-manager', () => ({
   eventManager: {

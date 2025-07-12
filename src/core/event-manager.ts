@@ -5,7 +5,7 @@ import {
   EventCallbacks,
   TimeoutId,
   ToastProps,
-} from './types';
+} from '../types';
 
 export const eventManager: EventManager = {
   list: new Map(),
