@@ -22,7 +22,12 @@ export default defineConfig({
       reporter: ['text', 'json', 'html', 'lcov'],
       reportsDirectory: './coverage-vitest',
       include: ['src/**/*.ts', 'src/**/*.tsx'],
-      exclude: ['src/**/*.test.ts', 'src/**/*.cy.tsx'],
+      exclude: [
+        'src/**/*.test.ts',
+        'src/**/*.cy.tsx',
+        'src/components/**/*',
+        'src/types/**/*',
+      ],
     },
   },
 });

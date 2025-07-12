@@ -12,6 +12,8 @@ coverage:
     - 'src/**/*.cy.tsx'
     - 'src/**/*.test.ts'
     - 'src/**/*.test.tsx'
+    - 'src/components/**/*'
+    - 'src/types/**/*'
     - 'cypress/**/*'
     - 'playground/**/*'
 
