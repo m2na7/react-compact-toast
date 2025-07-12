@@ -74,10 +74,12 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.14.5",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/node": "^24.0.13",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.6.0",
@@ -90,8 +92,7 @@
     "tsup": "^8.0.0",
     "typescript": "^5.8.2",
     "vite": "^6.0.3",
-    "vite-plugin-istanbul": "^6.0.2",
-    "@istanbuljs/nyc-config-typescript": "^1.0.2"
+    "vite-plugin-istanbul": "^6.0.2"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
