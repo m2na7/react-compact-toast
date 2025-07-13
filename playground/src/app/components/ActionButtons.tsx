@@ -5,7 +5,7 @@ export default function ActionButtons() {
     <div className="flex justify-center gap-4 mb-10">
       <Link
         href="/docs"
-        className="group relative overflow-hidden bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center"
+        className="group relative overflow-hidden bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-102 active:scale-98 flex items-center justify-center"
       >
         <div className="flex items-center">
           <span className="text-lg mr-2">📚</span>
@@ -17,7 +17,7 @@ export default function ActionButtons() {
         href="https://github.com/m2na7/react-compact-toast"
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative overflow-hidden bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center"
+        className="group relative overflow-hidden bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-102 active:scale-98 flex items-center justify-center"
       >
         <div className="flex items-center space-x-2">
           <svg
