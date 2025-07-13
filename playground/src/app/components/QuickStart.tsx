@@ -86,15 +86,15 @@ toast({
 
   return (
     <div className="my-10">
-      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 shadow-lg">
+      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-gray-200 shadow-lg">
         <h2 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
           <span className="text-lg mr-2">📋</span>
           Quick Start
         </h2>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Installation */}
-          <div className="col-span-1">
+          <div className="lg:col-span-1">
             <h3 className="text-base font-medium text-gray-800 mb-3 flex items-center">
               <span className="text-sm mr-2">📦</span>
               Installation
@@ -146,12 +146,12 @@ toast({
           </div>
 
           {/* Basic Usage */}
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <h3 className="text-base font-medium text-gray-800 mb-3 flex items-center">
               <span className="text-sm mr-2">🚀</span>
               Basic Usage
             </h3>
-            <div className="bg-gray-900 rounded-lg p-4 border border-gray-700 relative">
+            <div className="bg-gray-900 rounded-lg p-3 md:p-4 border border-gray-700 relative">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-gray-400 font-mono">JavaScript</span>
                 <button
@@ -212,12 +212,12 @@ toast({
           </div>
 
           {/* Advanced Usage */}
-          <div className="lg:col-span-3">
+          <div className="col-span-1 lg:col-span-3">
             <h3 className="text-base font-medium text-gray-800 mb-3 flex items-center">
               <span className="text-sm mr-2">⚙️</span>
               Advanced Options
             </h3>
-            <div className="bg-gray-900 rounded-lg p-4 border border-gray-700 relative">
+            <div className="bg-gray-900 rounded-lg p-3 md:p-4 border border-gray-700 relative">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-gray-400 font-mono">JavaScript</span>
                 <button
@@ -269,4 +269,4 @@ toast({
       </div>
     </div>
   );
-} 
+}
