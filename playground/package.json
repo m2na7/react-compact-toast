@@ -11,9 +11,10 @@
     "preview": "next start"
   },
   "dependencies": {
+    "motion": "^12.23.3",
     "next": "^15.3.5",
     "react": "^19.1.0",
-    "react-compact-toast": "^0.1.5",
+    "react-compact-toast": "^0.1.6",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {

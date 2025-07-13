@@ -37,7 +37,7 @@ export default function QuickStart() {
         icon: '✅',
         position: position,
         autoClose: 3000,
-        className: 'bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-2xl shadow-2xl'
+        className: 'bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-lg shadow-lg'
       });
     } catch (err) {
       console.error('Failed to copy text: ', err);
@@ -85,23 +85,23 @@ toast({
 });`;
 
   return (
-    <div className="my-12">
-      <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl">
-        <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-          <span className="text-2xl mr-3">📋</span>
+    <div className="my-10">
+      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-gray-200 shadow-lg">
+        <h2 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
+          <span className="text-lg mr-2">📋</span>
           Quick Start
         </h2>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Installation */}
-          <div className="col-span-1">
-            <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-              <span className="text-lg mr-2">📦</span>
+          <div className="lg:col-span-1">
+            <h3 className="text-base font-medium text-gray-800 mb-3 flex items-center">
+              <span className="text-sm mr-2">📦</span>
               Installation
             </h3>
-            <div className="space-y-4">
-              <div className="bg-gray-900/70 rounded-xl p-4 border border-gray-700/50 relative">
-                <div className="flex items-center justify-between mb-4">
+            <div className="space-y-3">
+              <div className="bg-gray-900 rounded-lg p-3 border border-gray-700 relative">
+                <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-gray-400 font-mono">Terminal</span>
                   <button
                     onClick={() => copyToClipboard(installCommands.npm, 'npm')}
@@ -110,12 +110,12 @@ toast({
                     {copiedId === 'npm' ? '✅ Copied!' : '📋 Copy'}
                   </button>
                 </div>
-                <pre className="text-sm overflow-x-auto">
+                <pre className="text-xs overflow-x-auto">
                   <code className="text-emerald-400 font-mono">{installCommands.npm}</code>
                 </pre>
               </div>
-              <div className="bg-gray-900/70 rounded-xl p-4 border border-gray-700/50 relative">
-                <div className="flex items-center justify-between mb-4">
+              <div className="bg-gray-900 rounded-lg p-3 border border-gray-700 relative">
+                <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-gray-400 font-mono">Terminal</span>
                   <button
                     onClick={() => copyToClipboard(installCommands.yarn, 'yarn')}
@@ -124,12 +124,12 @@ toast({
                     {copiedId === 'yarn' ? '✅ Copied!' : '📋 Copy'}
                   </button>
                 </div>
-                <pre className="text-sm overflow-x-auto">
+                <pre className="text-xs overflow-x-auto">
                   <code className="text-emerald-400 font-mono">{installCommands.yarn}</code>
                 </pre>
               </div>
-              <div className="bg-gray-900/70 rounded-xl p-4 border border-gray-700/50 relative">
-                <div className="flex items-center justify-between mb-4">
+              <div className="bg-gray-900 rounded-lg p-3 border border-gray-700 relative">
+                <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-gray-400 font-mono">Terminal</span>
                   <button
                     onClick={() => copyToClipboard(installCommands.pnpm, 'pnpm')}
@@ -138,7 +138,7 @@ toast({
                     {copiedId === 'pnpm' ? '✅ Copied!' : '📋 Copy'}
                   </button>
                 </div>
-                <pre className="text-sm overflow-x-auto">
+                <pre className="text-xs overflow-x-auto">
                   <code className="text-emerald-400 font-mono">{installCommands.pnpm}</code>
                 </pre>
               </div>
@@ -146,12 +146,12 @@ toast({
           </div>
 
           {/* Basic Usage */}
-          <div className="col-span-2">
-            <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-              <span className="text-lg mr-2">🚀</span>
+          <div className="lg:col-span-2">
+            <h3 className="text-base font-medium text-gray-800 mb-3 flex items-center">
+              <span className="text-sm mr-2">🚀</span>
               Basic Usage
             </h3>
-            <div className="bg-gray-900/70 rounded-xl p-4 border border-gray-700/50 relative">
+            <div className="bg-gray-900 rounded-lg p-3 md:p-4 border border-gray-700 relative">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-gray-400 font-mono">JavaScript</span>
                 <button
@@ -161,7 +161,7 @@ toast({
                   {copiedId === 'basic' ? '✅ Copied!' : '📋 Copy'}
                 </button>
               </div>
-              <pre className="text-sm overflow-x-auto">
+              <pre className="text-xs overflow-x-auto">
                 <code className="font-mono text-white">
                   <span className="text-purple-400">import</span>{' '}
                   <span className="text-yellow-400">{'{ ToastContainer, toast }'}</span>{' '}
@@ -198,7 +198,9 @@ toast({
                   <span className="text-blue-400">toast</span>({`{`} text: <span className="text-green-400">"super easy!"</span>, position: <span className="text-green-400">"topRight"</span> {`}`});
                   {'\n      }'}
                   <span className="text-red-400">&gt;</span>
+                  {'\n        '}
                   click me
+                  {'\n      '}
                   <span className="text-red-400">&lt;/</span><span className="text-white">button</span><span className="text-red-400">&gt;</span>
                   {'\n    '}
                   <span className="text-red-400">&lt;/</span><span className="text-white">div</span><span className="text-red-400">&gt;</span>
@@ -210,12 +212,12 @@ toast({
           </div>
 
           {/* Advanced Usage */}
-          <div className="lg:col-span-3">
-            <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-              <span className="text-lg mr-2">⚙️</span>
+          <div className="col-span-1 lg:col-span-3">
+            <h3 className="text-base font-medium text-gray-800 mb-3 flex items-center">
+              <span className="text-sm mr-2">⚙️</span>
               Advanced Options
             </h3>
-            <div className="bg-gray-900/70 rounded-xl p-4 border border-gray-700/50 relative">
+            <div className="bg-gray-900 rounded-lg p-3 md:p-4 border border-gray-700 relative">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-gray-400 font-mono">JavaScript</span>
                 <button
@@ -225,7 +227,7 @@ toast({
                   {copiedId === 'advanced' ? '✅ Copied!' : '📋 Copy'}
                 </button>
               </div>
-              <pre className="text-sm overflow-x-auto">
+              <pre className="text-xs overflow-x-auto">
                 <code className="font-mono text-white">
                   <span className="text-gray-500">// Custom toast with options</span>
                   {'\n'}
@@ -259,12 +261,12 @@ toast({
           </div>
         </div>
 
-        <div className="mt-6 p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
-          <p className="text-emerald-200 text-sm">
-            <span className="font-semibold">🎯 Pro Tip:</span> You can fully style your toasts using <code>className</code> — Tailwind, Emotion, Vanilla E, or plain CSS — it's all up to you!
+        <div className="mt-5 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
+          <p className="text-emerald-700 text-sm">
+            <span className="font-medium">🎯 Pro Tip:</span> You can fully style your toasts using <code className="bg-emerald-100 px-1 rounded text-emerald-800">className</code> — Tailwind, Emotion, Vanilla CSS, or plain CSS — it's all up to you!
           </p>
         </div>
       </div>
     </div>
   );
-} 
+}

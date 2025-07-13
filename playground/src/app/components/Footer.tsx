@@ -1,32 +1,32 @@
 export default function Footer() {
   return (
-    <footer className="mt-12 border-t border-gray-700/50 pt-8">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+    <footer className="mt-10 border-t border-gray-200 pt-6">
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
           <div className="text-center md:text-left">
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-600 text-sm">
               Built by{' '}
               <a
                 href="https://github.com/m2na7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 transition-colors duration-200 font-medium"
+                className="text-blue-600 hover:text-blue-500 transition-colors duration-200 font-medium"
               >
                 m2na7
               </a>
             </p>
           </div>
 
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4">
             <a
               href="https://github.com/m2na7/react-compact-toast"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center space-x-2"
+              className="text-gray-600 hover:text-gray-800 transition-colors duration-200 flex items-center space-x-2"
             >
               <svg
-                width="20"
-                height="20"
+                width="18"
+                height="18"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 className="flex-shrink-0"
