@@ -11,7 +11,7 @@
 
 
 </div>
-  <p>A tiny, compact, and fully customizable toast notification library for React applications.</p>
+  <p>Compact, easy-to-use toast notifications for React</p>
 </div>
 
 <div align="center">
