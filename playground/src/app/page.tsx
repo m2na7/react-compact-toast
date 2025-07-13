@@ -11,13 +11,7 @@ import ActionButtons from './components/ActionButtons';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-200 to-slate-100 relative">
-      {/* Subtle background decoration */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-50/40 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-indigo-50/40 rounded-full blur-3xl"></div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-stone-100 via-zinc-100 to-stone-50 text-gray-800">
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         <div className="max-w-5xl w-full">
           <Header />
