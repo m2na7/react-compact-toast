@@ -177,7 +177,7 @@ export default function InteractiveDemo() {
 
       <motion.div
         variants={itemVariants}
-        className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200"
+        className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200"
       >
         <p className="text-blue-700 text-sm">
           <span className="font-medium">💡 Tip:</span> Click buttons to test different toast features and configurations
