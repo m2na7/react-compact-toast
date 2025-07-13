@@ -1,6 +1,35 @@
 import { toast } from 'react-compact-toast';
+import { motion, useInView } from 'motion/react';
+import { useRef } from 'react';
 
 export default function InteractiveDemo() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
   const showSimpleToast = () => {
     toast('Hello! This is a simple toast!');
   };
@@ -48,97 +77,112 @@ export default function InteractiveDemo() {
   const showWithHighlight = () => {
     toast({
       text: ' text',
-      icon: '✨',
-      position: 'bottomRight',
-      className: 'bg-gradient-to-r from-emerald-500 to-green-500 text-white font-medium rounded-lg shadow-lg',
-      highlightText: 'Highlighted',
-      highlightColor: '#FFD700',
+      position: 'topLeft',
+      className: 'bg-gradient-to-r from-green-500 to-teal-500 text-white font-medium rounded-lg shadow-lg',
+      highlightText: 'This is highlighted',
+      highlightColor: '#FCD34D',
       autoClose: 5000,
     });
   };
 
   return (
-    <div className="lg:col-span-2">
-      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 shadow-lg">
-        <h2 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
-          <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-          Interactive Demo
-        </h2>
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
+      className="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 shadow-lg"
+    >
+      <motion.h2
+        variants={itemVariants}
+        className="text-xl font-semibold text-gray-800 mb-5 flex items-center"
+      >
+        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+        Interactive Demo
+      </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <button
-            onClick={showSimpleToast}
-            className="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-teal-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-2xl hover:scale-102 active:scale-98"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative flex items-center justify-center">
-              <span className="text-lg mr-2">🎉</span>
-              Simple Toast
-            </div>
-          </button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <motion.button
+          variants={itemVariants}
+          onClick={showSimpleToast}
+          className="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-teal-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-2xl hover:scale-102 active:scale-98"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative flex items-center justify-center">
+            <span className="text-lg mr-2">🎉</span>
+            Simple Toast
+          </div>
+        </motion.button>
 
-          <button
-            onClick={showWithIcon}
-            className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative flex items-center justify-center">
-              <span className="text-lg mr-2">🚀</span>
-              With Icon
-            </div>
-          </button>
+        <motion.button
+          variants={itemVariants}
+          onClick={showWithIcon}
+          className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative flex items-center justify-center">
+            <span className="text-lg mr-2">🚀</span>
+            With Icon
+          </div>
+        </motion.button>
 
-          <button
-            onClick={showNoAutoClose}
-            className="group relative overflow-hidden bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative flex items-center justify-center">
-              <span className="text-lg mr-2">📌</span>
-              No Auto Close
-            </div>
-          </button>
+        <motion.button
+          variants={itemVariants}
+          onClick={showNoAutoClose}
+          className="group relative overflow-hidden bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative flex items-center justify-center">
+            <span className="text-lg mr-2">📌</span>
+            No Auto Close
+          </div>
+        </motion.button>
 
-          <button
-            onClick={showCustomPosition}
-            className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative flex items-center justify-center">
-              <span className="text-lg mr-2">📍</span>
-              Custom Position
-            </div>
-          </button>
+        <motion.button
+          variants={itemVariants}
+          onClick={showCustomPosition}
+          className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative flex items-center justify-center">
+            <span className="text-lg mr-2">📍</span>
+            Custom Position
+          </div>
+        </motion.button>
 
-          <button
-            onClick={showCustomStyle}
-            className="group relative overflow-hidden bg-gradient-to-r from-pink-500 to-rose-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-rose-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative flex items-center justify-center">
-              <span className="text-lg mr-2">🎨</span>
-              Custom Style
-            </div>
-          </button>
+        <motion.button
+          variants={itemVariants}
+          onClick={showCustomStyle}
+          className="group relative overflow-hidden bg-gradient-to-r from-pink-500 to-rose-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-rose-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative flex items-center justify-center">
+            <span className="text-lg mr-2">🎨</span>
+            Custom Style
+          </div>
+        </motion.button>
 
-          <button
-            onClick={showWithHighlight}
-            className="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative flex items-center justify-center">
-              <span className="text-xl mr-2">✨</span>
-              With Highlight
-            </div>
-          </button>
-        </div>
-
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-blue-700 text-sm">
-            <span className="font-medium">💡 Tip:</span> Click buttons to test different toast features and configurations
-          </p>
-        </div>
+        <motion.button
+          variants={itemVariants}
+          onClick={showWithHighlight}
+          className="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative flex items-center justify-center">
+            <span className="text-xl mr-2">✨</span>
+            With Highlight
+          </div>
+        </motion.button>
       </div>
-    </div>
+
+      <motion.div
+        variants={itemVariants}
+        className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200"
+      >
+        <p className="text-blue-700 text-sm">
+          <span className="font-medium">💡 Tip:</span> Click buttons to test different toast features and configurations
+        </p>
+      </motion.div>
+    </motion.div>
   );
 } 
