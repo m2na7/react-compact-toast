@@ -5,9 +5,7 @@ describe('ToastContainer Component', () => {
   beforeEach(() => {
     // Clear any existing toasts before each test
     cy.window().then((win) => {
-      // @ts-ignore
       if (win.toastManager) {
-        // @ts-ignore
         win.toastManager.clear();
       }
     });
