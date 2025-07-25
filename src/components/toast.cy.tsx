@@ -49,7 +49,6 @@ describe('Toast Component', () => {
 
     cy.get('.toast').should('be.visible');
     cy.get('.toast').click();
-    // Toast should start exit animation
     cy.get('.toast').should('have.class', 'toast-exit-top');
   });
 
@@ -58,7 +57,6 @@ describe('Toast Component', () => {
 
     cy.get('.toast').should('be.visible');
     cy.get('.toast').click();
-    // Toast should not have exit class
     cy.get('.toast').should('not.have.class', 'toast-exit-top');
   });
 
@@ -104,14 +102,13 @@ describe('Toast Component', () => {
   it('should auto close after specified duration', () => {
     const autoCloseProps: ToastProps = {
       ...defaultProps,
-      autoClose: 1000, // 1 second
+      autoClose: 1000,
     };
 
     cy.mount(<Toast {...autoCloseProps} />);
 
     cy.get('.toast').should('be.visible');
 
-    // Wait for auto close animation to start
     cy.wait(1100);
     cy.get('.toast').should('have.class', 'toast-exit-top');
   });
@@ -227,10 +224,8 @@ describe('Toast Component', () => {
 
     cy.get('.toast').should('be.visible');
 
-    // Trigger animation end event
     cy.get('.toast').trigger('animationend');
 
-    // Toast should still be visible after animation end
     cy.get('.toast').should('be.visible');
   });
 
@@ -281,14 +276,11 @@ describe('Toast Component', () => {
 
     cy.get('.toast').should('be.visible');
 
-    // Click to start exit animation
     cy.get('.toast').click();
     cy.get('.toast').should('have.class', 'toast-exit-top');
 
-    // Trigger animation end
     cy.get('.toast').trigger('animationend');
 
-    // Toast should still exist (component handles the cleanup)
     cy.get('.toast').should('exist');
   });
 
@@ -304,8 +296,59 @@ describe('Toast Component', () => {
     cy.get('.toast').should('be.visible');
     cy.get('.toast').should('have.class', 'toast-enter-bottom');
 
-    // Wait for auto close
     cy.wait(600);
     cy.get('.toast').should('have.class', 'toast-exit-bottom');
+  });
+
+  it('should accept offset prop as number', () => {
+    const propsWithNumberOffset: ToastProps = {
+      ...defaultProps,
+      offset: 100,
+    };
+
+    cy.mount(<Toast {...propsWithNumberOffset} />);
+
+    cy.get('.toast').should('be.visible');
+    cy.get('.toast-text').should('contain.text', 'Test toast message');
+  });
+
+  it('should accept offset prop as string', () => {
+    const propsWithStringOffset: ToastProps = {
+      ...defaultProps,
+      offset: '200px',
+    };
+
+    cy.mount(<Toast {...propsWithStringOffset} />);
+
+    cy.get('.toast').should('be.visible');
+    cy.get('.toast-text').should('contain.text', 'Test toast message');
+  });
+
+  it('should accept offset prop with different CSS units', () => {
+    const cssUnits = ['50px', '2rem', '5vh', '10%'];
+
+    cssUnits.forEach((offset) => {
+      const propsWithOffset: ToastProps = {
+        ...defaultProps,
+        offset,
+      };
+
+      cy.mount(<Toast {...propsWithOffset} />);
+
+      cy.get('.toast').should('be.visible');
+      cy.get('.toast-text').should('contain.text', 'Test toast message');
+    });
+  });
+
+  it('should work without offset prop', () => {
+    const propsWithoutOffset: ToastProps = {
+      ...defaultProps,
+      offset: undefined,
+    };
+
+    cy.mount(<Toast {...propsWithoutOffset} />);
+
+    cy.get('.toast').should('be.visible');
+    cy.get('.toast-text').should('contain.text', 'Test toast message');
   });
 });
