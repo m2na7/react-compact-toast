@@ -3,6 +3,7 @@ import { toast } from '../core/toast';
 
 describe('ToastContainer Component', () => {
   beforeEach(() => {
+    // Clear any existing toasts before each test
     cy.window().then((win) => {
       if (win.toastManager) {
         win.toastManager.clear();
