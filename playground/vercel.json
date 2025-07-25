@@ -1,0 +1,3 @@
+{
+  "buildCommand": "cd .. && pnpm install && pnpm run build:lib && cd playground && pnpm install --no-frozen-lockfile && pnpm run build"
+}
