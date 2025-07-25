@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd playground && pnpm install && pnpm run build",
+  "outputDirectory": "playground/.next",
+  "installCommand": "pnpm install",
+  "framework": "nextjs"
+}
