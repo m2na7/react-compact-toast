@@ -2,6 +2,7 @@ import { memo, useMemo, Fragment } from 'react';
 
 import Toast from './toast';
 import { useToastContainer } from '../hooks/use-toast-container';
+import { getToastOffsetStyle } from '../utils/get-toast-offset-style';
 import '../styles.css';
 
 const ToastContainer = () => {
@@ -17,6 +18,7 @@ const ToastContainer = () => {
         <div
           key={position}
           className={`toast-container toast-position-${position}`}
+          style={getToastOffsetStyle(toasts, position)}
         >
           {toasts.map((toastProps) => (
             <Toast key={toastProps.toastId} {...toastProps} />
