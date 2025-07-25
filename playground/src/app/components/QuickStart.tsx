@@ -247,6 +247,8 @@ toast({
                   {'\n  '}
                   <span className="text-cyan-400">position</span>: <span className="text-green-400">'topRight'</span>,
                   {'\n  '}
+                  <span className="text-cyan-400">offset</span>: <span className="text-green-400">'80px'</span>,
+                  {'\n  '}
                   <span className="text-cyan-400">className</span>: <span className="text-green-400">'bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl'</span>
                   {'\n'}{'}'};
                   {'\n\n'}

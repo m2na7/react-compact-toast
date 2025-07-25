@@ -56,8 +56,9 @@ export default function InteractiveDemo() {
 
   const showCustomPosition = () => {
     toast({
-      text: 'Bottom left positioned toast',
+      text: 'Toast with custom offset',
       position: 'bottomLeft',
+      offset: 80,
       className: 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium rounded-lg shadow-lg',
       autoClose: 5000,
     });
@@ -66,7 +67,7 @@ export default function InteractiveDemo() {
   const showCustomStyle = () => {
     toast({
       text: ' uploaded and processed. Click here to view details or dismiss this notification.',
-      position: 'topLeft',
+      position: 'bottomRight',
       className: 'w-80 h-24 bg-white text-gray-800 rounded-lg shadow-lg border-l-4 border-green-500 p-4 flex flex-col justify-center hover:shadow-xl transition-shadow duration-200',
       highlightText: 'Successfully',
       highlightColor: '#10B981',
@@ -105,9 +106,9 @@ export default function InteractiveDemo() {
         <motion.button
           variants={itemVariants}
           onClick={showSimpleToast}
-          className="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-teal-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-2xl hover:scale-102 active:scale-98"
+          className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-2xl hover:scale-102 active:scale-98"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <div className="relative flex items-center justify-center">
             <span className="text-lg mr-2">🎉</span>
             Simple Toast
@@ -140,13 +141,13 @@ export default function InteractiveDemo() {
 
         <motion.button
           variants={itemVariants}
-          onClick={showCustomPosition}
-          className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
+          onClick={showWithHighlight}
+          className="group relative overflow-hidden bg-gradient-to-r from-amber-400 to-yellow-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <div className="relative flex items-center justify-center">
-            <span className="text-lg mr-2">📍</span>
-            Custom Position
+            <span className="text-xl mr-2">✅</span>
+            With Highlight
           </div>
         </motion.button>
 
@@ -164,15 +165,16 @@ export default function InteractiveDemo() {
 
         <motion.button
           variants={itemVariants}
-          onClick={showWithHighlight}
-          className="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
+          onClick={showCustomPosition}
+          className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <div className="relative flex items-center justify-center">
-            <span className="text-xl mr-2">✨</span>
-            With Highlight
+            <span className="text-lg mr-2">📍</span>
+            Custom offset from top/bottom
           </div>
         </motion.button>
+
       </div>
 
       <motion.div
