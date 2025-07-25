@@ -1,4 +1,4 @@
-import { toast } from 'react-compact-toast';
+import { toast } from '../../../../src/core/toast';
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
 

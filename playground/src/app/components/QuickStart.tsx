@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { toast } from 'react-compact-toast';
+import { toast } from '../../../../src/core/toast';
 
 export default function QuickStart() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
