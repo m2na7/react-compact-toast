@@ -13,6 +13,7 @@ const Toast = ({
   autoClose = 3000,
   closeOnClick = true,
   position = TOAST_DEFAULT_POSITION,
+  offset,
   className,
 }: ToastProps) => {
   const { isExiting, handleAnimationEnd, handleClick } = useToast(
@@ -22,6 +23,9 @@ const Toast = ({
   );
 
   const isTopPosition = position.startsWith('top');
+
+  // Prevent unused variable warning
+  void offset;
 
   const renderIcon = () => {
     switch (icon) {

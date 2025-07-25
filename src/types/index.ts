@@ -9,13 +9,14 @@ export type ToastPosition =
 export type ToastProps = {
   toastId: string;
   text: string;
+  icon?: React.JSX.Element | string | 'default';
+  highlightText?: string;
+  highlightColor?: string;
   autoClose?: false | number;
   closeOnClick?: boolean;
   position?: ToastPosition;
-  icon?: React.JSX.Element | string | 'default';
+  offset?: number | string;
   className?: string;
-  highlightText?: string;
-  highlightColor?: string;
 };
 
 export const enum ToastEvent {

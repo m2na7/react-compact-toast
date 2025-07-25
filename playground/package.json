@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:vercel": "cd .. && pnpm install && pnpm run build:lib && cd playground && pnpm install --no-frozen-lockfile && next build",
     "start": "next start",
     "lint": "eslint .",
     "preview": "next start"
@@ -14,7 +15,6 @@
     "motion": "^12.23.3",
     "next": "^15.3.5",
     "react": "^19.1.0",
-    "react-compact-toast": "^0.1.6",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {

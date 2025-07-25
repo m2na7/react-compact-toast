@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import '../styles/globals.css'
+import '../../../src/styles.css'
 
 export const metadata: Metadata = {
   title: 'React Compact Toast',

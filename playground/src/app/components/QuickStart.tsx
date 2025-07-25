@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { toast } from 'react-compact-toast';
+import { toast } from '../../../../src/core/toast';
 
 export default function QuickStart() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -246,6 +246,8 @@ toast({
                   <span className="text-cyan-400">closeOnClick</span>: <span className="text-orange-400">true</span>,
                   {'\n  '}
                   <span className="text-cyan-400">position</span>: <span className="text-green-400">'topRight'</span>,
+                  {'\n  '}
+                  <span className="text-cyan-400">offset</span>: <span className="text-green-400">'80px'</span>,
                   {'\n  '}
                   <span className="text-cyan-400">className</span>: <span className="text-green-400">'bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl'</span>
                   {'\n'}{'}'};

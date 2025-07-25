@@ -34,6 +34,9 @@ const emitAddToast = (toastProps: ToastOptions) => {
  * @param {ToastPosition} [options.position='bottomCenter'] - Position where the toast appears:
  *   - 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight'
  * @param {string} [options.className] - Custom CSS classes to apply to the toast
+ * @param {string | number} [options.offset] - Custom offset from screen edge:
+ *   - `string`: CSS value like '50px', '2rem', '5vh'
+ *   - `number`: Pixel value (e.g., 50 becomes '50px')
  * @returns {string} The unique ID of the created toast
  *
  * @example
@@ -51,6 +54,15 @@ const emitAddToast = (toastProps: ToastOptions) => {
  *   closeOnClick: true,
  *   position: 'topRight',
  *   className: 'bg-blue-500 text-white rounded-lg',
+ *   offset: 50, // 50px from screen edge
+ * });
+ *
+ * @example
+ * // Toast with custom offset
+ * toast({
+ *   text: 'Far from edge',
+ *   position: 'topCenter',
+ *   offset: '100px', // 100px from top
  * });
  */
 export const toast = (options: ToastOptions | string): string => {

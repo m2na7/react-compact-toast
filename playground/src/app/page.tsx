@@ -1,6 +1,6 @@
 'use client'
 
-import { ToastContainer } from 'react-compact-toast';
+import ToastContainer from '../../../src/components/toast-container';
 import Header from './components/Hero';
 import QuickStart from './components/QuickStart';
 import InteractiveDemo from './components/InteractiveDemo';
