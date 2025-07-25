@@ -11,7 +11,9 @@ export const getToastOffsetStyle = (
   position: string
 ): React.CSSProperties => {
   const firstToast = toasts[0];
-  if (!firstToast?.offset) return {};
+
+  if (firstToast?.offset === undefined || firstToast?.offset === null)
+    return {};
 
   const offset =
     typeof firstToast.offset === 'number'
