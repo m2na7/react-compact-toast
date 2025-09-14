@@ -8,6 +8,7 @@
 [![npm downloads](https://img.shields.io/npm/dt/react-compact-toast.svg?color=yellow)](https://npmjs.com/package/react-compact-toast)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/m2na7/react-compact-toast/graph/badge.svg?token=YWV9W9GTVN)](https://codecov.io/gh/m2na7/react-compact-toast)
+![zip](https://badgen.net/bundlephobia/minzip/react-compact-toast)
 
 
 </div>
@@ -25,7 +26,7 @@
 
 ## ✨ Features
 
-- 🪶 **Lightweight**: ~2.7KB gzipped
+- 🪶 **Lightweight**: ≈2KB gzipped
 - 🎯 **Zero dependencies**: No external dependencies
 - 🎨 **Fully customizable**: Style with any CSS framework (Tailwind, Emotion, etc.)
 - ⚡ **Fast**: Optimized for performance
