@@ -56,9 +56,9 @@ export default function InteractiveDemo() {
 
   const showCustomPosition = () => {
     toast({
-      text: 'Toast with custom offset',
+      text: 'Toast with custom position',
       position: 'bottomLeft',
-      offset: 80,
+      containerStyle: { left: '40px', bottom: '100px' },
       className: 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium rounded-lg shadow-lg',
       autoClose: 5000,
     });
@@ -174,7 +174,6 @@ export default function InteractiveDemo() {
             Custom offset from top/bottom
           </div>
         </motion.button>
-
       </div>
 
       <motion.div

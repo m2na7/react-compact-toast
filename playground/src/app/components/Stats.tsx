@@ -50,7 +50,7 @@ export default function Stats() {
           className="flex justify-between items-center"
         >
           <span className="text-gray-600 text-sm">Bundle Size</span>
-          <span className="text-green-600 font-semibold text-sm">~2.7 kB</span>
+          <span className="text-green-600 font-semibold text-sm">≈2 kB</span>
         </motion.div>
         <motion.div
           variants={itemVariants}

@@ -250,8 +250,12 @@ toast({
                   <span className="text-cyan-400">offset</span>: <span className="text-green-400">'80px'</span>,
                   {'\n  '}
                   <span className="text-cyan-400">className</span>: <span className="text-green-400">'bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl'</span>
-                  {'\n'}{'}'};
+                  {'\n  '}
+                  <span className="text-cyan-400">containerStyle</span>: <span className="text-green-400">{`{ left: '40px', bottom: '100px' }`}</span>,
+                  {'\n  '}
+                  {'}'};
                   {'\n\n'}
+
                   <span className="text-gray-500">// Available positions:</span>
                   {'\n'}
                   <span className="text-gray-500">// 'topLeft' | 'topCenter' | 'topRight' |</span>
