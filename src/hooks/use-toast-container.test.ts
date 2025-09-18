@@ -388,6 +388,41 @@ describe('useToastContainer', () => {
       expect(bottomLeftGroup?.toasts).toHaveLength(1);
     });
 
+    it('should apply containerStyle from second toast if first has none', () => {
+      const { result } = renderHook(() => useToastContainer());
+
+      const addToastCallback = (eventManager.on as any).mock.calls.find(
+        (call: any) => call[0] === ToastEvent.Add
+      )[1];
+
+      const firstToast: ToastProps = {
+        toastId: '1',
+        text: 'First toast without style',
+        position: 'topRight',
+      };
+
+      const secondToast: ToastProps = {
+        toastId: '2',
+        text: 'Second toast with style',
+        position: 'topRight',
+        containerStyle: { right: '150px', top: '75px' },
+      };
+
+      act(() => {
+        addToastCallback(firstToast);
+        addToastCallback(secondToast);
+      });
+
+      const positionGroups = result.current.getToastPositionGroupToRender();
+      const topRightGroup = positionGroups.get('topRight');
+
+      expect(topRightGroup?.containerStyle).toEqual({
+        right: '150px',
+        top: '75px',
+      });
+      expect(topRightGroup?.toasts).toHaveLength(2);
+    });
+
     it('should follow "first wins" policy for containerStyle in same position', () => {
       const { result } = renderHook(() => useToastContainer());
 
