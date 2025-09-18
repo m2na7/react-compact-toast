@@ -18,7 +18,7 @@ const ToastContainer = () => {
         ([position, { toasts, containerStyle }]) => {
           const className = `toast-container toast-position-${position}`;
 
-          const combinedStyle = {
+          const combinedStyle: React.CSSProperties = {
             ...getToastOffsetStyle(toasts, position),
             ...containerStyle,
           };
