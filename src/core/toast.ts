@@ -37,6 +37,7 @@ const emitAddToast = (toastProps: ToastOptions) => {
  * @param {string | number} [options.offset] - Custom offset from screen edge:
  *   - `string`: CSS value like '50px', '2rem', '5vh'
  *   - `number`: Pixel value (e.g., 50 becomes '50px')
+ * @param {React.CSSProperties} [options.containerStyle] - Custom inline styles to apply to the toast container
  * @returns {string} The unique ID of the created toast
  *
  * @example
@@ -55,6 +56,7 @@ const emitAddToast = (toastProps: ToastOptions) => {
  *   position: 'topRight',
  *   className: 'bg-blue-500 text-white rounded-lg',
  *   offset: 50, // 50px from screen edge
+ *   containerStyle: { right: '100px', top: '50px' }, // Custom container positioning
  * });
  *
  * @example

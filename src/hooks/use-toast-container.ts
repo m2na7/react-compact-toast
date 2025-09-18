@@ -52,15 +52,29 @@ export const useToastContainer = () => {
   }, [addToast, deleteToast, updateToast]);
 
   const getToastPositionGroupToRender = useCallback(() => {
-    const positionGroup = new Map<ToastPosition, ToastProps[]>();
+    const positionGroup = new Map<
+      ToastPosition,
+      {
+        toasts: ToastProps[];
+        containerStyle?: React.CSSProperties;
+      }
+    >();
 
     toastList.forEach((toast) => {
       const position = toast.position || TOAST_DEFAULT_POSITION;
 
       if (!positionGroup.has(position)) {
-        positionGroup.set(position, []);
+        positionGroup.set(position, {
+          toasts: [],
+          containerStyle: toast.containerStyle,
+        });
+      } else {
+        const existing = positionGroup.get(position)!;
+        if (toast.containerStyle && !existing.containerStyle) {
+          existing.containerStyle = toast.containerStyle;
+        }
       }
-      positionGroup.get(position)!.push(toast);
+      positionGroup.get(position)!.toasts.push(toast);
     });
 
     return positionGroup;
