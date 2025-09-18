@@ -27,6 +27,8 @@ export default defineConfig({
         'src/**/*.cy.tsx',
         'src/components/**/*',
         'src/types/**/*',
+        'src/**/index.ts',
+        'src/test-setup.ts',
       ],
     },
   },

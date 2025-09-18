@@ -14,17 +14,24 @@ const ToastContainer = () => {
 
   return (
     <Fragment>
-      {Array.from(positionGroup).map(([position, toasts]) => (
-        <div
-          key={position}
-          className={`toast-container toast-position-${position}`}
-          style={getToastOffsetStyle(toasts, position)}
-        >
-          {toasts.map((toastProps) => (
-            <Toast key={toastProps.toastId} {...toastProps} />
-          ))}
-        </div>
-      ))}
+      {Array.from(positionGroup).map(
+        ([position, { toasts, containerStyle }]) => {
+          const className = `toast-container toast-position-${position}`;
+
+          const combinedStyle: React.CSSProperties = {
+            ...getToastOffsetStyle(toasts, position),
+            ...containerStyle,
+          };
+
+          return (
+            <div key={position} className={className} style={combinedStyle}>
+              {toasts.map((toastProps) => (
+                <Toast key={toastProps.toastId} {...toastProps} />
+              ))}
+            </div>
+          );
+        }
+      )}
     </Fragment>
   );
 };

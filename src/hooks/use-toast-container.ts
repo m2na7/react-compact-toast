@@ -3,6 +3,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { TOAST_DEFAULT_POSITION } from '../constants';
 import { eventManager, ToastEvent, ToastPosition, ToastProps } from '../core';
 
+type ToastPositionGroup = {
+  toasts: ToastProps[];
+  containerStyle?: React.CSSProperties;
+};
+
 export const useToastContainer = () => {
   const [toastList, setToastList] = useState(new Map<string, ToastProps>());
 
@@ -52,15 +57,23 @@ export const useToastContainer = () => {
   }, [addToast, deleteToast, updateToast]);
 
   const getToastPositionGroupToRender = useCallback(() => {
-    const positionGroup = new Map<ToastPosition, ToastProps[]>();
+    const positionGroup = new Map<ToastPosition, ToastPositionGroup>();
 
     toastList.forEach((toast) => {
       const position = toast.position || TOAST_DEFAULT_POSITION;
 
       if (!positionGroup.has(position)) {
-        positionGroup.set(position, []);
+        positionGroup.set(position, {
+          toasts: [],
+          containerStyle: toast.containerStyle,
+        });
+      } else {
+        const existing = positionGroup.get(position)!;
+        if (toast.containerStyle && !existing.containerStyle) {
+          existing.containerStyle = toast.containerStyle;
+        }
       }
-      positionGroup.get(position)!.push(toast);
+      positionGroup.get(position)!.toasts.push(toast);
     });
 
     return positionGroup;

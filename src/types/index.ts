@@ -17,6 +17,7 @@ export type ToastProps = {
   position?: ToastPosition;
   offset?: number | string;
   className?: string;
+  containerStyle?: React.CSSProperties;
 };
 
 export const enum ToastEvent {
