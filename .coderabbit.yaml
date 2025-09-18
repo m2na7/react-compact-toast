@@ -4,6 +4,7 @@ reviews:
   request_changes_workflow: false
   high_level_summary: true
   review_status: true
+  poem: false
   collapse_walkthrough: false
   path_filters:
     - "!**/node_modules/**"
@@ -30,50 +31,21 @@ reviews:
     - "!**/LICENSE"
   path_instructions:
     - path: "src/**/*.{ts,tsx}"
-      instructions:
-        - "Review TypeScript and React code for conformity with best practices in React hooks, TypeScript, and modern React patterns"
-        - "Ensure proper TypeScript typing with no 'any' types unless absolutely necessary"
-        - "Check for proper React component patterns, hooks usage, and performance optimizations"
-        - "Verify proper error handling and edge cases"
-        - "Look for potential memory leaks in event listeners and timers"
-        - "Ensure accessibility best practices are followed"
+      instructions: "Review TypeScript and React code for conformity with best practices in React hooks, TypeScript, and modern React patterns. Ensure proper TypeScript typing with no 'any' types unless absolutely necessary. Check for proper React component patterns, hooks usage, and performance optimizations. Verify proper error handling and edge cases. Look for potential memory leaks in event listeners and timers. Ensure accessibility best practices are followed."
     - path: "src/core/**/*.ts"
-      instructions:
-        - "Focus on core library logic, event handling, and state management"
-        - "Ensure proper singleton patterns and memory management"
-        - "Verify proper TypeScript interfaces and type safety"
-        - "Check for potential race conditions and async handling"
+      instructions: "Focus on core library logic, event handling, and state management. Ensure proper singleton patterns and memory management. Verify proper TypeScript interfaces and type safety. Check for potential race conditions and async handling."
     - path: "src/components/**/*.tsx"
-      instructions:
-        - "Review React components for proper prop typing and component composition"
-        - "Ensure proper use of React hooks and lifecycle management"
-        - "Check for accessibility attributes and semantic HTML"
-        - "Verify proper CSS class handling and styling patterns"
+      instructions: "Review React components for proper prop typing and component composition. Ensure proper use of React hooks and lifecycle management. Check for accessibility attributes and semantic HTML. Verify proper CSS class handling and styling patterns."
     - path: "src/hooks/**/*.ts"
-      instructions:
-        - "Review custom React hooks for proper hook rules compliance"
-        - "Ensure proper dependency arrays and effect cleanup"
-        - "Verify proper return types and hook composition"
+      instructions: "Review custom React hooks for proper hook rules compliance. Ensure proper dependency arrays and effect cleanup. Verify proper return types and hook composition."
     - path: "**/*.test.{ts,tsx}"
-      instructions:
-        - "Review test coverage and test quality"
-        - "Ensure proper mocking and test isolation"
-        - "Check for edge cases and error scenarios"
-        - "Verify proper async test handling"
+      instructions: "Review test coverage and test quality. Ensure proper mocking and test isolation. Check for edge cases and error scenarios. Verify proper async test handling."
     - path: "**/*.cy.tsx"
-      instructions:
-        - "Review Cypress component tests for proper component interaction testing"
-        - "Ensure proper test selectors and assertions"
-        - "Check for proper test data setup and cleanup"
+      instructions: "Review Cypress component tests for proper component interaction testing. Ensure proper test selectors and assertions. Check for proper test data setup and cleanup."
     - path: "tsup.config.ts"
-      instructions:
-        - "Review build configuration for proper bundling and output formats"
-        - "Ensure proper entry points and external dependencies handling"
+      instructions: "Review build configuration for proper bundling and output formats. Ensure proper entry points and external dependencies handling."
     - path: "package.json"
-      instructions:
-        - "Review dependencies for security vulnerabilities and version compatibility"
-        - "Ensure proper peer dependencies for React library"
-        - "Check scripts and build configuration"
+      instructions: "Review dependencies for security vulnerabilities and version compatibility. Ensure proper peer dependencies for React library. Check scripts and build configuration."
   auto_review:
     enabled: true
     ignore_title_keywords:
