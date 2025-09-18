@@ -96,8 +96,8 @@ describe('useToastContainer', () => {
       });
 
       const positionGroups = result.current.getToastPositionGroupToRender();
-      expect(positionGroups.get('topRight')).toHaveLength(1);
-      expect(positionGroups.get('topRight')![0]).toEqual(toastProps);
+      expect(positionGroups.get('topRight')?.toasts).toHaveLength(1);
+      expect(positionGroups.get('topRight')!.toasts[0]).toEqual(toastProps);
     });
 
     it('should add multiple toasts to the list', () => {
@@ -125,7 +125,7 @@ describe('useToastContainer', () => {
       });
 
       const positionGroups = result.current.getToastPositionGroupToRender();
-      expect(positionGroups.get('topRight')).toHaveLength(2);
+      expect(positionGroups.get('topRight')?.toasts).toHaveLength(2);
     });
   });
 
@@ -151,7 +151,7 @@ describe('useToastContainer', () => {
       });
 
       let positionGroups = result.current.getToastPositionGroupToRender();
-      expect(positionGroups.get('topRight')).toHaveLength(1);
+      expect(positionGroups.get('topRight')?.toasts).toHaveLength(1);
 
       act(() => {
         deleteToastCallback('test-1');
@@ -182,14 +182,14 @@ describe('useToastContainer', () => {
       });
 
       let positionGroups = result.current.getToastPositionGroupToRender();
-      expect(positionGroups.get('topRight')).toHaveLength(1);
+      expect(positionGroups.get('topRight')?.toasts).toHaveLength(1);
 
       act(() => {
         deleteToastCallback('non-existent-id');
       });
 
       positionGroups = result.current.getToastPositionGroupToRender();
-      expect(positionGroups.get('topRight')).toHaveLength(1);
+      expect(positionGroups.get('topRight')?.toasts).toHaveLength(1);
     });
   });
 
@@ -219,7 +219,7 @@ describe('useToastContainer', () => {
       });
 
       const positionGroups = result.current.getToastPositionGroupToRender();
-      const updatedToast = positionGroups.get('topRight')![0];
+      const updatedToast = positionGroups.get('topRight')!.toasts[0];
       expect(updatedToast.text).toBe('Updated message');
       expect(updatedToast.toastId).toBe('test-1');
       expect(updatedToast.position).toBe('topRight');
@@ -250,7 +250,7 @@ describe('useToastContainer', () => {
       });
 
       const positionGroups = result.current.getToastPositionGroupToRender();
-      const toast = positionGroups.get('topRight')![0];
+      const toast = positionGroups.get('topRight')!.toasts[0];
       expect(toast.text).toBe('Original message');
     });
   });
@@ -277,9 +277,115 @@ describe('useToastContainer', () => {
       const positionGroups = result.current.getToastPositionGroupToRender();
 
       expect(positionGroups.size).toBe(3);
-      expect(positionGroups.get('topRight')).toHaveLength(2);
-      expect(positionGroups.get('bottomLeft')).toHaveLength(1);
-      expect(positionGroups.get('topCenter')).toHaveLength(1);
+      expect(positionGroups.get('topRight')?.toasts).toHaveLength(2);
+      expect(positionGroups.get('bottomLeft')?.toasts).toHaveLength(1);
+      expect(positionGroups.get('topCenter')?.toasts).toHaveLength(1);
+    });
+
+    it('should include containerStyle from toast props', () => {
+      const { result } = renderHook(() => useToastContainer());
+
+      const addToastCallback = (eventManager.on as any).mock.calls.find(
+        (call: any) => call[0] === ToastEvent.Add
+      )[1];
+
+      const toastWithContainerStyle: ToastProps = {
+        toastId: '1',
+        text: 'Toast with container style',
+        position: 'topRight',
+        containerStyle: { right: '100px', top: '50px' },
+      };
+
+      act(() => {
+        addToastCallback(toastWithContainerStyle);
+      });
+
+      const positionGroups = result.current.getToastPositionGroupToRender();
+      const topRightGroup = positionGroups.get('topRight');
+
+      expect(topRightGroup?.containerStyle).toEqual({
+        right: '100px',
+        top: '50px',
+      });
+      expect(topRightGroup?.toasts).toHaveLength(1);
+    });
+
+    it('should merge containerStyle when multiple toasts have same position', () => {
+      const { result } = renderHook(() => useToastContainer());
+
+      const addToastCallback = (eventManager.on as any).mock.calls.find(
+        (call: any) => call[0] === ToastEvent.Add
+      )[1];
+
+      const firstToast: ToastProps = {
+        toastId: '1',
+        text: 'First toast',
+        position: 'topRight',
+        containerStyle: { right: '100px', top: '50px' },
+      };
+
+      const secondToast: ToastProps = {
+        toastId: '2',
+        text: 'Second toast',
+        position: 'topRight',
+      };
+
+      act(() => {
+        addToastCallback(firstToast);
+        addToastCallback(secondToast);
+      });
+
+      const positionGroups = result.current.getToastPositionGroupToRender();
+      const topRightGroup = positionGroups.get('topRight');
+
+      expect(topRightGroup?.containerStyle).toEqual({
+        right: '100px',
+        top: '50px',
+      });
+      expect(topRightGroup?.toasts).toHaveLength(2);
+    });
+
+    it('should handle containerStyle with different position groups', () => {
+      const { result } = renderHook(() => useToastContainer());
+
+      const addToastCallback = (eventManager.on as any).mock.calls.find(
+        (call: any) => call[0] === ToastEvent.Add
+      )[1];
+
+      const topRightToast: ToastProps = {
+        toastId: '1',
+        text: 'Top right toast',
+        position: 'topRight',
+        containerStyle: { right: '100px', top: '50px' },
+      };
+
+      const bottomLeftToast: ToastProps = {
+        toastId: '2',
+        text: 'Bottom left toast',
+        position: 'bottomLeft',
+        containerStyle: { left: '80px', bottom: '60px' },
+      };
+
+      act(() => {
+        addToastCallback(topRightToast);
+        addToastCallback(bottomLeftToast);
+      });
+
+      const positionGroups = result.current.getToastPositionGroupToRender();
+
+      const topRightGroup = positionGroups.get('topRight');
+      const bottomLeftGroup = positionGroups.get('bottomLeft');
+
+      expect(topRightGroup?.containerStyle).toEqual({
+        right: '100px',
+        top: '50px',
+      });
+      expect(bottomLeftGroup?.containerStyle).toEqual({
+        left: '80px',
+        bottom: '60px',
+      });
+      expect(topRightGroup?.toasts).toHaveLength(1);
+      expect(bottomLeftGroup?.toasts).toHaveLength(1);
     });
 
     it('should use default position when position is not specified', () => {
@@ -299,7 +405,7 @@ describe('useToastContainer', () => {
       });
 
       const positionGroups = result.current.getToastPositionGroupToRender();
-      expect(positionGroups.get('bottomCenter')).toHaveLength(1);
+      expect(positionGroups.get('bottomCenter')?.toasts).toHaveLength(1);
     });
 
     it('should return empty map when no toasts exist', () => {
@@ -327,7 +433,7 @@ describe('useToastContainer', () => {
       });
 
       const positionGroups = result.current.getToastPositionGroupToRender();
-      const topRightToasts = positionGroups.get('topRight')!;
+      const topRightToasts = positionGroups.get('topRight')!.toasts;
 
       expect(topRightToasts[0].text).toBe('First');
       expect(topRightToasts[1].text).toBe('Second');
@@ -360,15 +466,19 @@ describe('useToastContainer', () => {
       });
 
       let positionGroups = result.current.getToastPositionGroupToRender();
-      expect(positionGroups.get('topRight')).toHaveLength(1);
-      expect(positionGroups.get('topRight')![0].text).toBe('Original message');
+      expect(positionGroups.get('topRight')?.toasts).toHaveLength(1);
+      expect(positionGroups.get('topRight')!.toasts[0].text).toBe(
+        'Original message'
+      );
 
       act(() => {
         updateToastCallback('lifecycle-test', 'Updated message');
       });
 
       positionGroups = result.current.getToastPositionGroupToRender();
-      expect(positionGroups.get('topRight')![0].text).toBe('Updated message');
+      expect(positionGroups.get('topRight')!.toasts[0].text).toBe(
+        'Updated message'
+      );
 
       act(() => {
         deleteToastCallback('lifecycle-test');
