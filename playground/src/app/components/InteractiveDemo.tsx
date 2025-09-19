@@ -49,7 +49,7 @@ export default function InteractiveDemo() {
 
   const showNoAutoClose = () => {
     toast({
-      text: 'Please review your input',
+      text: 'Click to dismiss',
       icon: '⚠',
       position: 'topCenter',
       className: 'backdrop-blur-md bg-amber-500/90 text-white border border-amber-400/30 rounded-2xl shadow-2xl px-6 py-4 font-medium',

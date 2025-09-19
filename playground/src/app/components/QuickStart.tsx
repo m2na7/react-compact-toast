@@ -34,10 +34,11 @@ export default function QuickStart() {
       }
 
       toast({
-        text: 'Code copied to clipboard! 📋',
-        icon: '✅',
+        text: 'Copied to clipboard',
+        icon: '✓',
         position: position,
-        autoClose: 3000,
+        autoClose: 2500,
+        className: 'backdrop-blur-md bg-neutral-900/95 text-neutral-50 border border-neutral-700/50 rounded-xl shadow-2xl px-4 py-3 text-sm font-medium min-w-0'
       });
     } catch (err) {
       console.error('Failed to copy text: ', err);
