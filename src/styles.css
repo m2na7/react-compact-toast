@@ -1,51 +1,51 @@
 @keyframes toastEnterFromBottom {
   0% {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(100%) scale(0.96);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes toastExitToBottom {
   0% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(100%) scale(0.96);
   }
 }
 
 @keyframes toastEnterFromTop {
   0% {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-100%) scale(0.96);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes toastExitToTop {
   0% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-100%) scale(0.96);
   }
 }
 
 .toast {
   position: relative;
-  min-width: 320px;
-  min-height: 50px;
+  min-width: 280px;
+  min-height: 44px;
 
   display: flex;
   justify-content: center;
@@ -58,12 +58,14 @@
   cursor: pointer;
   pointer-events: auto;
   touch-action: auto;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .toast-default-style {
-  background-color: white;
-  color: #121212;
-  border-radius: 24px;
+  background-color: rgb(40, 40, 40);
+  color: rgb(250, 250, 250);
+  border-radius: 16px;
+  padding: 16px 24px;
 }
 
 .toast-content {
@@ -77,27 +79,31 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: pre-line;
-  max-width: 270px;
+  max-width: 320px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .toast-highlight-text {
-  color: #a9e34b;
+  color: inherit;
+  font-weight: 600;
 }
 
 .toast-enter-top {
-  animation: toastEnterFromTop 0.5s ease-out forwards;
+  animation: toastEnterFromTop 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .toast-exit-top {
-  animation: toastExitToTop 0.5s ease-in forwards;
+  animation: toastExitToTop 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
 .toast-enter-bottom {
-  animation: toastEnterFromBottom 0.5s ease-out forwards;
+  animation: toastEnterFromBottom 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .toast-exit-bottom {
-  animation: toastExitToBottom 0.5s ease-in forwards;
+  animation: toastExitToBottom 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
 .toast-container {
