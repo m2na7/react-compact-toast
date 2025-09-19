@@ -38,7 +38,6 @@ export default function QuickStart() {
         icon: '✅',
         position: position,
         autoClose: 3000,
-        className: 'bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-lg shadow-lg'
       });
     } catch (err) {
       console.error('Failed to copy text: ', err);
@@ -85,9 +84,8 @@ toast({
 
   return (
     <div className="my-10">
-      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-gray-200 shadow-lg">
-        <h2 className="text-xl font-semibold text-gray-800 mb-5 flex items-center">
-          <span className="text-lg mr-2">📋</span>
+      <div className="backdrop-blur-xl bg-white/60 border border-neutral-200/50 rounded-3xl p-4 md:p-6 shadow-xl shadow-neutral-900/5">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-5 flex items-center">
           Quick Start
         </h2>
 
