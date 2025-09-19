@@ -1,10 +1,10 @@
-import { motion } from 'motion/react';
+import { motion, Variants } from 'motion/react';
 
 interface ShowToastButtonProps {
   onClick: () => void;
   color: 'neutral' | 'emerald' | 'amber' | 'red' | 'blue' | 'white' | 'purple';
   children: React.ReactNode;
-  variants: any;
+  variants: Variants;
 }
 
 export default function ShowToastButton({ onClick, color, children, variants }: ShowToastButtonProps) {
@@ -55,7 +55,7 @@ export default function ShowToastButton({ onClick, color, children, variants }: 
       className={`group relative flex items-center justify-center gap-2 p-3 sm:p-4 rounded-2xl border transition-all duration-200 active:scale-[0.98] ${config.button}`}
     >
       <div className={`w-2 h-2 rounded-full transition-colors ${config.dot}`} />
-      <span className={`text-xs  sm:text-sm font-medium ${config.text}`}>{children}</span>
+      <span className={`text-xs sm:text-sm font-medium ${config.text}`}>{children}</span>
     </motion.button>
   );
 }
