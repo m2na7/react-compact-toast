@@ -1,6 +1,7 @@
 import { toast } from '../../../../src/core/toast';
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
+import ShowToastButton from './ShowToastButton';
 
 export default function InteractiveDemo() {
   const ref = useRef(null);
@@ -30,59 +31,63 @@ export default function InteractiveDemo() {
     }
   };
 
-  const showSimpleToast = () => {
-    toast('Hello! This is a simple toast!');
+  const showPlain = () => {
+    toast({
+      text: 'Simple and clean notification',
+    });
   };
 
   const showWithIcon = () => {
     toast({
-      text: 'with custom icon',
-      icon: '🚀',
+      text: 'Task completed successfully',
+      icon: '✓',
       position: 'topRight',
-      className: 'bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium rounded-lg shadow-lg',
-      autoClose: 5000,
+      className: 'backdrop-blur-md bg-emerald-500/90 text-white border border-emerald-400/30 rounded-2xl shadow-2xl px-6 py-4 font-medium',
+      autoClose: 4000,
     });
   };
 
   const showNoAutoClose = () => {
     toast({
-      text: 'Click to close !',
+      text: 'Click to dismiss',
+      icon: '⚠',
       position: 'topCenter',
-      className: 'bg-gradient-to-r from-orange-500 to-red-500 text-white font-medium rounded-lg shadow-lg',
+      className: 'backdrop-blur-md bg-amber-500/90 text-white border border-amber-400/30 rounded-2xl shadow-2xl px-6 py-4 font-medium',
       autoClose: false,
       closeOnClick: true,
     });
   };
 
-  const showCustomPosition = () => {
+  const showCustomOffset = () => {
     toast({
-      text: 'Toast with custom offset',
+      text: 'Something went wrong',
+      icon: '✕',
       position: 'bottomLeft',
-      offset: 80,
-      className: 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium rounded-lg shadow-lg',
+      containerStyle: { left: '50px', bottom: '150px' },
+      className: 'backdrop-blur-md bg-red-500/90 text-white border border-red-400/30 rounded-2xl shadow-2xl px-6 py-4 font-medium',
       autoClose: 5000,
     });
   };
 
-  const showCustomStyle = () => {
+  const showWithHighlightText = () => {
+    toast({
+      text: ' has been updated. Review the changes in your dashboard.',
+      position: 'bottomRight',
+      className: 'backdrop-blur-md bg-white/95 text-neutral-900 border border-neutral-200 rounded-2xl shadow-2xl p-6 max-w-sm',
+      highlightText: 'Project status',
+      highlightColor: '#a855f7',
+      autoClose: 8000,
+    });
+  };
+
+  const showFullyCustomizable = () => {
     toast({
       text: ' uploaded and processed. Click here to view details or dismiss this notification.',
-      position: 'bottomRight',
-      className: 'w-80 h-24 bg-white text-gray-800 rounded-lg shadow-lg border-l-4 border-green-500 p-4 flex flex-col justify-center hover:shadow-xl transition-shadow duration-200',
-      highlightText: 'Successfully',
-      highlightColor: '#10B981',
-      autoClose: 10000,
-    });
-  };
-
-  const showWithHighlight = () => {
-    toast({
-      text: ' text',
       position: 'topLeft',
-      className: 'bg-gradient-to-r from-green-500 to-teal-500 text-white font-medium rounded-lg shadow-lg',
-      highlightText: 'This is highlighted',
-      highlightColor: '#FCD34D',
-      autoClose: 5000,
+      className: 'w-80 h-24 bg-white text-gray-800 rounded-lg shadow-lg border-l-4 border-blue-500/90 p-4 flex flex-col justify-center hover:shadow-xl transition-shadow duration-200',
+      highlightText: 'Successfully',
+      highlightColor: '#3b82f6',
+      autoClose: 10000,
     });
   };
 
@@ -92,97 +97,52 @@ export default function InteractiveDemo() {
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
-      className="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-gray-200 shadow-lg"
+      className="backdrop-blur-xl bg-white/60 border border-neutral-200/50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-neutral-900/5"
     >
-      <motion.h2
+      <motion.div
         variants={itemVariants}
-        className="text-xl font-semibold text-gray-800 mb-5 flex items-center"
+        className="mb-8"
       >
-        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-        Interactive Demo
-      </motion.h2>
+        <h2 className="text-2xl font-medium text-neutral-900 mb-2">
+          Toast Showcase
+        </h2>
+        <p className="text-neutral-600 text-sm leading-relaxed">
+          Experience different notification styles and interactions
+        </p>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <motion.button
-          variants={itemVariants}
-          onClick={showSimpleToast}
-          className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-2xl hover:scale-102 active:scale-98"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex items-center justify-center">
-            <span className="text-lg mr-2">🎉</span>
-            Simple Toast
-          </div>
-        </motion.button>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <ShowToastButton onClick={showPlain} color="neutral" variants={itemVariants}>
+          Plain
+        </ShowToastButton>
 
-        <motion.button
-          variants={itemVariants}
-          onClick={showWithIcon}
-          className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex items-center justify-center">
-            <span className="text-lg mr-2">🚀</span>
-            With Icon
-          </div>
-        </motion.button>
+        <ShowToastButton onClick={showWithIcon} color="emerald" variants={itemVariants}>
+          With icon
+        </ShowToastButton>
 
-        <motion.button
-          variants={itemVariants}
-          onClick={showNoAutoClose}
-          className="group relative overflow-hidden bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex items-center justify-center">
-            <span className="text-lg mr-2">📌</span>
-            No Auto Close
-          </div>
-        </motion.button>
+        <ShowToastButton onClick={showNoAutoClose} color="amber" variants={itemVariants}>
+          No auto close
+        </ShowToastButton>
 
-        <motion.button
-          variants={itemVariants}
-          onClick={showWithHighlight}
-          className="group relative overflow-hidden bg-gradient-to-r from-amber-400 to-yellow-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex items-center justify-center">
-            <span className="text-xl mr-2">✅</span>
-            With Highlight
-          </div>
-        </motion.button>
+        <ShowToastButton onClick={showCustomOffset} color="red" variants={itemVariants}>
+          Custom offset
+        </ShowToastButton>
 
-        <motion.button
-          variants={itemVariants}
-          onClick={showCustomStyle}
-          className="group relative overflow-hidden bg-gradient-to-r from-pink-500 to-rose-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-rose-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex items-center justify-center">
-            <span className="text-lg mr-2">🎨</span>
-            Custom Style
-          </div>
-        </motion.button>
+        <ShowToastButton onClick={showFullyCustomizable} color="blue" variants={itemVariants}>
+          Fully customizable
+        </ShowToastButton>
 
-        <motion.button
-          variants={itemVariants}
-          onClick={showCustomPosition}
-          className="group relative overflow-hidden bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-102 active:scale-98"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex items-center justify-center">
-            <span className="text-lg mr-2">📍</span>
-            Custom offset from top/bottom
-          </div>
-        </motion.button>
-
+        <ShowToastButton onClick={showWithHighlightText} color="purple" variants={itemVariants}>
+          With highlight
+        </ShowToastButton>
       </div>
 
       <motion.div
         variants={itemVariants}
-        className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200"
+        className="mt-8 p-4 rounded-2xl bg-neutral-100/50 border border-neutral-200/50"
       >
-        <p className="text-blue-700 text-sm">
-          <span className="font-medium">💡 Tip:</span> Click buttons to test different toast features and configurations
+        <p className="text-neutral-600 text-[13px] leading-relaxed">
+          <span className="font-medium text-neutral-800">Interactive Demo:</span> Click any button to see toast notifications with different styles, positions, and behaviors.
         </p>
       </motion.div>
     </motion.div>

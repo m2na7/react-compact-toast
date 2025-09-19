@@ -46,7 +46,7 @@ export default function Header() {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-700 border border-green-200 cursor-pointer shadow-md"
             >
-              ✨ ~2.7 kB
+              ✨ ≈2 kB
             </motion.span>
             <motion.span
               whileHover={{ scale: 1.05, y: -2 }}
