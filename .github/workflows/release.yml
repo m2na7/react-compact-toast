@@ -45,6 +45,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           npm version ${{ github.event.inputs.version }} -m "Release v%s"
+          git push origin HEAD:main
           git push --tags
 
       - name: Run Unit Tests
