@@ -14,6 +14,9 @@ jobs:
   release:
     name: Package Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -36,8 +39,6 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           npm version ${{ github.event.inputs.version }} -m "Release v%s"
-          git checkout -b release/${{ github.event.inputs.version }}
-          git push --set-upstream origin release/${{ github.event.inputs.version }}
           git push --tags
 
       - name: Run Unit Tests
