@@ -7,11 +7,9 @@ export default defineConfig([
     format: ['cjs', 'esm'],
     dts: true,
     sourcemap: true,
-    clean: true,
     external: ['react', 'react-dom'],
     minify: true,
     outDir: 'dist',
-    treeshake: true,
     target: 'es2018',
   },
   // CSS file
