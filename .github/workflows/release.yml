@@ -40,14 +40,6 @@ jobs:
           path: ~/.cache/Cypress
           key: cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
-      - name: Update Package Version
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          npm version ${{ github.event.inputs.version }} -m "Release v%s"
-          git push origin HEAD:main
-          git push --tags
-
       - name: Run Unit Tests
         run: pnpm run test:unit:run
 
@@ -59,6 +51,14 @@ jobs:
 
       - name: Build Library
         run: pnpm run build:lib
+
+      - name: Update Package Version
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          npm version ${{ github.event.inputs.version }} -m "Release v%s"
+          git push origin HEAD:main
+          git push --tags
 
       - name: Create GitHub Release
         env:
