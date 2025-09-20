@@ -10,6 +10,9 @@ jobs:
   quality:
     name: Check quality
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     strategy:
       matrix:
         command: ['type-check', 'format:check', 'build:lib', 'build']
@@ -35,20 +38,36 @@ jobs:
         run: pnpm run ${{ matrix.command }}
         continue-on-error: ${{ matrix.command == 'build:lib' }}
 
+  check-bundle-size:
+    name: Bundle size check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    needs: quality
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Check library bundle size
-        if: matrix.command == 'build:lib'
         uses: preactjs/compressed-size-action@v2
         with:
           build-script: 'build:lib'
           pattern: './dist/**/*.{js,mjs,css}'
-          exclude: '{**/*.map,**/node_modules/**}'
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: Check demo app bundle size
-        if: matrix.command == 'build'
-        uses: preactjs/compressed-size-action@v2
-        with:
-          build-script: 'build'
-          pattern: './build/static/**/*.{js,css}'
           exclude: '{**/*.map,**/node_modules/**}'
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
