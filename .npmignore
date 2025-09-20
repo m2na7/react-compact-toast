@@ -8,7 +8,7 @@ build/
 # Config files
 tsconfig.json
 tsconfig.node.json
-tsup.config.ts
+tsdown.config.ts
 .gitignore
 .swcrc
 
