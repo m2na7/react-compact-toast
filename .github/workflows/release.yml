@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g., 1.0.1)"
+        required: true
+        type: string
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Package Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Setup pnpm
+        with:
+          version: 10
+
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Update Package Version
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          npm version ${{ github.event.inputs.version }} -m "Release v%s"
+          git checkout -b release/${{ github.event.inputs.version }}
+          git push --set-upstream origin release/${{ github.event.inputs.version }}
+          git push --tags
+
+      - name: Run Unit Tests
+        run: pnpm run test:unit:run
+
+      - name: Run Cypress Tests
+        run: pnpm run test
+
+      - name: Build Library
+        run: pnpm run build:lib
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create v${{ github.event.inputs.version }} \
+            --title "v${{ github.event.inputs.version }}" \
+            --generate-notes
+
+      - name: Publish to NPM
+        run: pnpm publish --access=public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_PUBLISH_KEY_NPM }}
