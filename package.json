@@ -46,8 +46,8 @@
     "coverage:open": "open coverage/lcov-report/index.html",
     "coverage:reset": "rm -rf coverage .nyc_output",
     "eject": "react-scripts eject",
-    "build:lib": "tsup",
-    "dev:lib": "tsup --watch",
+    "build:lib": "tsdown",
+    "dev:lib": "tsdown --watch",
     "playground": "cd playground && pnpm run dev",
     "playground:build": "cd playground && pnpm run build",
     "playground:preview": "cd playground && pnpm run preview",
@@ -98,7 +98,7 @@
     "nyc": "^17.1.0",
     "prettier": "^3.6.2",
     "react-scripts": "5.0.1",
-    "tsup": "^8.0.0",
+    "tsdown": "^0.12.9",
     "typescript": "^5.8.2",
     "vite": "^6.0.3",
     "vite-plugin-istanbul": "^6.0.2",
@@ -109,7 +109,7 @@
     "react-dom": "^18 || ^19"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "packageManager": "pnpm@10.12.0"
 }

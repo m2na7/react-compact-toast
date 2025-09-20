@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 
 export default defineConfig([
   // Main bundle with injected styles
@@ -6,14 +6,10 @@ export default defineConfig([
     entry: ['src/index.ts'],
     format: ['cjs', 'esm'],
     dts: true,
-    splitting: false,
     sourcemap: true,
-    clean: true,
-    external: ['react', 'react-dom'],
-    injectStyle: true,
+    external: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
     minify: true,
     outDir: 'dist',
-    treeshake: true,
     target: 'es2018',
   },
   // CSS file
