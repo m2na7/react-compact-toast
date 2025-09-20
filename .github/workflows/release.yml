@@ -34,6 +34,12 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      - name: Cache Cypress Binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
       - name: Update Package Version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -43,6 +49,9 @@ jobs:
 
       - name: Run Unit Tests
         run: pnpm run test:unit:run
+
+      - name: Install Cypress Binary
+        run: pnpm exec cypress install
 
       - name: Run Cypress Tests
         run: pnpm run test
