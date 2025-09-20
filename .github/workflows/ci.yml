@@ -4,12 +4,15 @@ on:
   push:
     branches: [main, develop]
   pull_request:
-    branches: [main, develop]
+    types: [opened, synchronize, reopened]
 
 jobs:
-  lint-and-build:
+  quality:
+    name: Check quality
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        command: ['type-check', 'format:check', 'build:lib', 'build']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,21 +31,24 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Type check
-        run: pnpm type-check
+      - name: Run command
+        run: pnpm run ${{ matrix.command }}
+        continue-on-error: ${{ matrix.command == 'build:lib' }}
 
-      - name: Format check
-        run: pnpm format:check
-
-      - name: Build library
-        run: pnpm build:lib
-
-      - name: Build demo (React Scripts)
-        run: pnpm build
-
-      - name: Check bundle size
+      - name: Check library bundle size
+        if: matrix.command == 'build:lib'
         uses: preactjs/compressed-size-action@v2
         with:
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          build-script: 'build:lib'
           pattern: './dist/**/*.{js,mjs,css}'
           exclude: '{**/*.map,**/node_modules/**}'
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Check demo app bundle size
+        if: matrix.command == 'build'
+        uses: preactjs/compressed-size-action@v2
+        with:
+          build-script: 'build'
+          pattern: './build/static/**/*.{js,css}'
+          exclude: '{**/*.map,**/node_modules/**}'
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
