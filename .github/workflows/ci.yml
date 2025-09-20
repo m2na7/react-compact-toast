@@ -68,6 +68,6 @@ jobs:
         uses: preactjs/compressed-size-action@v2
         with:
           build-script: 'build:lib'
-          pattern: './dist/**/*.{js,mjs,css}'
-          exclude: '{**/*.map,**/node_modules/**}'
+          pattern: './dist/**/*.{js,mjs}'
+          exclude: '{**/*.map,**/node_modules/**,**/styles.css,**/index.css,**/styles.mjs}'
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
