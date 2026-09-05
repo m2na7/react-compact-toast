@@ -1,0 +1,493 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1788533691561,
+  "projectRoot": "/Users/m2na/orca/workspaces/react-compact-toast/seasnake",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": ">=20",
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "cypress",
+        "version": "14.5.1",
+        "category": "testing"
+      },
+      {
+        "name": "next",
+        "version": "15.3.5",
+        "category": "fullstack"
+      },
+      {
+        "name": "vite",
+        "version": "6.0.3",
+        "category": "build"
+      },
+      {
+        "name": "vitest",
+        "version": "3.2.4",
+        "category": "testing"
+      }
+    ],
+    "packageManager": "pnpm",
+    "runtime": "Node.js 20"
+  },
+  "build": {
+    "buildCommand": "cd /Users/m2na/orca/workspaces/react-compact-toast/seasnake\npython3 - <<'PY'\n# `subscribeToToasts` is no longer only-hub; the unused import must go.\np='src/hooks/use-toast-container.ts'; s=open(p).read()\nif 'cancelPendingEmits' in s and 'cancelPendingEmits()' not in s.split('import')[-1]:\n    pass\nopen(p,'w').write(s)\nPY\npnpm lint 2>&1 | grep -vE \"baseline|^>|^$\" | head -10; echo \"--- lint ---\"\npnpm exec tsc --noEmit -p tsconfig.json 2>&1 | head -3; echo \"--- types ---\"\npnpm build 2>&1 | grep -E \"index.mjs |headless.mjs |attw|error\" | head -4\nnode -e \"\nconst z=require('zlib'),f=require('fs');const g=p=>z.gzipSync(f.readFileSync(p)).length;\nconsole.log('index.mjs', g('dist/index.mjs'), '| headless.mjs', g('dist/headless.mjs'));\n\"",
+    "testCommand": "cd /Users/m2na/orca/workspaces/react-compact-toast/seasnake\ngit add -A vitest.setup.ts codecov.yml cypress/support src/test-utils.ts \\\n  src/core/event-manager.test.tsx src/core/store.test.ts src/core/toast.test.ts \\\n  src/core/announcer.test.tsx src/hooks src/components src/index.test.tsx \\\n  src/ssr.test.tsx src/hydration.test.tsx src/utils\ngit diff --cached --name-status | sed 's/^/  /'\nLEFTHOOK=0 git commit -q -F - <<'EOF'\ntest: rewrite the suites against the public API\n\nThe old suites asserted internals and caught none of the defects this branch\nfixes. One pinned a bug as the specification: a case named \"should not\ndecrease count below zero\" asserted the count was `-1`. The Cypress offset\ntests passed an `offset` and then only checked the toast was visible, so\nthey could not fail.\n\nThe suites now drive the public API and split by what each layer can answer:\n\n- Vitest (jsdom) covers the hub, the store, timers, the rendered DOM, server\n  rendering and hydration. 195 tests, 98% of statements.\n- Cypress covers what jsdom cannot: real CSS animations, computed layout,\n  `pointer-events`, horizontal overflow and focus. Ten tests, each asserting\n  something only a browser decides.\n- `pnpm test:package` covers the published artifact.\n\n`event-manager.test.tsx` covers the hub as its own contract — subscribe,\nchain, unsubscribe one or all, payloads per event, cancelled notifications,\nand the count staying derived through a twenty-toast burst.\n\njsdom has no Web Animations API, so the tests that exercise the \"wait for the\nexit animation\" path install a controllable stand-in rather than skipping it.\nThe Cypress support file no longer declares a `window.toastManager` global\nthat never existed. Coverage config had contradicted itself by excluding\n`src/components` from all three reporters while telling Codecov that Cypress\ncovered it; it now reports one flag over the whole of `src`.\nEOF\ngit log --oneline -1",
+    "lintCommand": null,
+    "devCommand": "pnpm start",
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "cypress run --component",
+      "test:open": "cypress open",
+      "test:headless": "cypress run --component --headless",
+      "test:coverage": "cypress run --component --headless && nyc report --reporter=lcov",
+      "test:unit": "vitest",
+      "test:unit:ui": "vitest --ui",
+      "test:unit:run": "vitest run",
+      "test:unit:coverage": "vitest run --coverage",
+      "coverage:open": "open coverage/lcov-report/index.html",
+      "coverage:reset": "rm -rf coverage .nyc_output",
+      "eject": "react-scripts eject",
+      "build:lib": "tsdown",
+      "dev:lib": "tsdown --watch",
+      "playground": "cd playground && pnpm run dev",
+      "playground:build": "cd playground && pnpm run build",
+      "playground:preview": "cd playground && pnpm run preview",
+      "prepare": "lefthook install",
+      "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+      "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+      "type-check": "tsc --noEmit"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "public",
+      "src"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "cypress": {
+      "path": "cypress",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1788533691535,
+      "keyFiles": []
+    },
+    "playground": {
+      "path": "playground",
+      "purpose": null,
+      "fileCount": 12,
+      "lastAccessed": 1788533691535,
+      "keyFiles": [
+        "README.md",
+        "eslint.config.js",
+        "next-env.d.ts",
+        "next.config.js",
+        "package.json"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 3,
+      "lastAccessed": 1788533691539,
+      "keyFiles": [
+        "favicon.ico",
+        "index.html",
+        "logo.webp"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 3,
+      "lastAccessed": 1788533691539,
+      "keyFiles": [
+        "index.ts",
+        "styles.css",
+        "test-setup.ts"
+      ]
+    },
+    "playground/public": {
+      "path": "playground/public",
+      "purpose": "Public files",
+      "fileCount": 2,
+      "lastAccessed": 1788533691540,
+      "keyFiles": [
+        "favicon.ico",
+        "logo.webp"
+      ]
+    },
+    "playground/src": {
+      "path": "playground/src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1788533691540,
+      "keyFiles": []
+    },
+    "src/components": {
+      "path": "src/components",
+      "purpose": "UI components",
+      "fileCount": 5,
+      "lastAccessed": 1788533691541,
+      "keyFiles": [
+        "index.ts",
+        "toast-container.cy.tsx",
+        "toast-container.tsx"
+      ]
+    },
+    "src/types": {
+      "path": "src/types",
+      "purpose": "Type definitions",
+      "fileCount": 1,
+      "lastAccessed": 1788533691543,
+      "keyFiles": [
+        "index.ts"
+      ]
+    },
+    "src/utils": {
+      "path": "src/utils",
+      "purpose": "Utility functions",
+      "fileCount": 3,
+      "lastAccessed": 1788533691544,
+      "keyFiles": [
+        "get-toast-offset-style.test.ts",
+        "get-toast-offset-style.ts",
+        "index.ts"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": ".staging/src/types.ts",
+      "accessCount": 5,
+      "lastAccessed": 1788536458814,
+      "type": "file"
+    },
+    {
+      "path": "src/components/toast.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1788537186680,
+      "type": "file"
+    },
+    {
+      "path": "src/components/toast-container.tsx",
+      "accessCount": 5,
+      "lastAccessed": 1788538435218,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/core/store.ts",
+      "accessCount": 4,
+      "lastAccessed": 1788536501508,
+      "type": "file"
+    },
+    {
+      "path": "src/styles.css",
+      "accessCount": 4,
+      "lastAccessed": 1788537180411,
+      "type": "file"
+    },
+    {
+      "path": "tsdown.config.mts",
+      "accessCount": 4,
+      "lastAccessed": 1788537257382,
+      "type": "file"
+    },
+    {
+      "path": "src/core/announcer.ts",
+      "accessCount": 4,
+      "lastAccessed": 1788539630453,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/hooks/use-toast.ts",
+      "accessCount": 3,
+      "lastAccessed": 1788536875434,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/hooks/use-toast-container.ts",
+      "accessCount": 3,
+      "lastAccessed": 1788536907301,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/use-toast.test.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1788537495109,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/core/toast.ts",
+      "accessCount": 2,
+      "lastAccessed": 1788535914220,
+      "type": "file"
+    },
+    {
+      "path": "src/types/index.ts",
+      "accessCount": 2,
+      "lastAccessed": 1788536064420,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/use-toast.ts",
+      "accessCount": 2,
+      "lastAccessed": 1788536124780,
+      "type": "file"
+    },
+    {
+      "path": "src/utils/get-toast-offset-style.ts",
+      "accessCount": 2,
+      "lastAccessed": 1788536385660,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/constants.ts",
+      "accessCount": 2,
+      "lastAccessed": 1788536470935,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/core/inject-styles.ts",
+      "accessCount": 2,
+      "lastAccessed": 1788536689909,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/styles.css",
+      "accessCount": 2,
+      "lastAccessed": 1788536859964,
+      "type": "file"
+    },
+    {
+      "path": "src/hooks/use-toast-container.ts",
+      "accessCount": 2,
+      "lastAccessed": 1788536946333,
+      "type": "file"
+    },
+    {
+      "path": "scripts/check-package.mjs",
+      "accessCount": 2,
+      "lastAccessed": 1788538101489,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 2,
+      "lastAccessed": 1788538481160,
+      "type": "file"
+    },
+    {
+      "path": "src/components/icons.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1788595030563,
+      "type": "file"
+    },
+    {
+      "path": "src/core/event-manager.ts",
+      "accessCount": 2,
+      "lastAccessed": 1788608274054,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/core/get-node-text.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788535642861,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/core/animation.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788535652075,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/hooks/use-inject-styles.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788535713075,
+      "type": "file"
+    },
+    {
+      "path": "src/core/toast.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788535841603,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/env.d.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788536464109,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/hooks/use-page-focus.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788536655853,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/core/announcer.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788536673865,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/hooks/use-announcements.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788536682164,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/core/defined-only.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788536770166,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/components/icons.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788536780542,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/components/toast.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788536792880,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/components/toast-container.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788536820456,
+      "type": "file"
+    },
+    {
+      "path": ".staging/src/index.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788536829588,
+      "type": "file"
+    },
+    {
+      "path": "vitest.config.mts",
+      "accessCount": 1,
+      "lastAccessed": 1788537095114,
+      "type": "file"
+    },
+    {
+      "path": "vitest.setup.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788537294188,
+      "type": "file"
+    },
+    {
+      "path": "src/core/store.test.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788537320670,
+      "type": "file"
+    },
+    {
+      "path": "src/core/toast.test.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788537348827,
+      "type": "file"
+    },
+    {
+      "path": "src/components/toast.test.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788537526937,
+      "type": "file"
+    },
+    {
+      "path": "src/components/toast-container.test.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788537569559,
+      "type": "file"
+    },
+    {
+      "path": "src/core/get-node-text.test.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788537763572,
+      "type": "file"
+    },
+    {
+      "path": "src/core/announcer.test.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788537776969,
+      "type": "file"
+    },
+    {
+      "path": "src/index.test.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788537805405,
+      "type": "file"
+    },
+    {
+      "path": "src/ssr.test.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788537812585,
+      "type": "file"
+    },
+    {
+      "path": "src/hydration.test.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788537845275,
+      "type": "file"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "accessCount": 1,
+      "lastAccessed": 1788538024306,
+      "type": "file"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "accessCount": 1,
+      "lastAccessed": 1788538043150,
+      "type": "file"
+    },
+    {
+      "path": "playground/src/app/docs/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1788538223812,
+      "type": "file"
+    },
+    {
+      "path": "src/core/store.ts",
+      "accessCount": 1,
+      "lastAccessed": 1788538842990,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

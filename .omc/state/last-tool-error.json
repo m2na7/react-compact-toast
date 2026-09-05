@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"python3 - <<'PY'\\n# 10) The bundle bakes in the package version, so it must be built AFTER the\\n#     version bump. `prepack` guarantees that for both `npm publish` and `pack`.\\np='package...",
+  "error": "Exit code 1\n65:    \"prepack\": \"pnpm build\",\n=== verify prepack rebuilds with the right version ===\ncurrent version: 0.2.3\nnode:fs:441\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\n                   ^\n\nError: ENOENT: no such file or directory, open 'dist/index.mjs'\n    at Object.readFileSync (node:fs:441:20)\n    at [eval]:2:23\n    at runScriptInThisContext (node:internal/vm:209:10)\n    at node:internal/process/execution:446:12\n    at [eval]-wrapper:6:24\n    at runScriptInCo...",
+  "timestamp": "2026-09-04T16:36:52.007Z",
+  "retry_count": 1
+}
