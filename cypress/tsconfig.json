@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["cypress", "node", "vite/client"],
+    "isolatedModules": false
+  },
+  "include": [
+    "support/**/*.ts",
+    "../cypress.config.ts",
+    "../src/**/*.cy.tsx",
+    "../src/env.d.ts"
+  ],
+  "exclude": ["../node_modules"]
+}

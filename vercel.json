@@ -1,5 +1,5 @@
 {
-  "installCommand": "pnpm install --no-frozen-lockfile && cd playground && pnpm install --no-frozen-lockfile",
-  "buildCommand": "cd playground && pnpm run build",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm build && pnpm --filter playground build",
   "outputDirectory": "playground/.next"
 }
