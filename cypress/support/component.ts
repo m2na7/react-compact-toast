@@ -1,6 +1,5 @@
-import './commands';
 import { mount } from 'cypress/react';
-import '@cypress/code-coverage/support';
+import '../../src/styles.css';
 
 declare global {
   namespace Cypress {
@@ -11,5 +10,3 @@ declare global {
 }
 
 Cypress.Commands.add('mount', mount);
-
-import '../../src/styles.css';
