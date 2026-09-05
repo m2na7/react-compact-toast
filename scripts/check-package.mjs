@@ -132,6 +132,13 @@ attempt('esmEntry', () => url(NAME));
 attempt('cjsEntry', () => require.resolve(NAME));
 attempt('esmPackageJson', () => url(NAME + '/package.json'));
 attempt('cjsPackageJson', () => require.resolve(NAME + '/package.json'));
+attempt('esmHeadless', () => url(NAME + '/headless'));
+attempt('cjsHeadless', () => require.resolve(NAME + '/headless'));
+attempt('cjsHeadlessExports', () => Object.keys(require(NAME + '/headless')));
+await (async () => {
+  try { out.headlessExports = Object.keys(await import(NAME + '/headless')); } catch (e) { out.errors.headlessExports = String(e && e.stack || e); }
+})();
+if (out.esmHeadless) out.headlessSource = readFileSync(out.esmHeadless, 'utf8');
 attempt('esmStyles', () => url(NAME + '/styles.css'));
 attempt('cjsStyles', () => require.resolve(NAME + '/styles.css'));
 for (const key of ['esmEntry', 'cjsEntry']) {
@@ -205,6 +212,34 @@ process.stdout.write('\\n__RESULT__' + JSON.stringify(out));
     r.esmPackageJson && r.cjsPackageJson,
     `${NAME}/package.json resolves (ESM + CJS)`,
     r.errors.esmPackageJson ?? r.errors.cjsPackageJson
+  );
+
+  const headlessMissing = ['toast', 'useToast', 'useToastContainer'].filter(
+    (e) => !(r.headlessExports ?? []).includes(e)
+  );
+  check(
+    headlessMissing.length === 0,
+    `${NAME}/headless exposes toast, useToast, useToastContainer`,
+    r.errors.headlessExports ?? `missing: ${headlessMissing.join(', ')}`
+  );
+  const cjsHeadlessMissing = ['toast', 'useToast', 'useToastContainer'].filter(
+    (e) => !(r.cjsHeadlessExports ?? []).includes(e)
+  );
+  check(
+    cjsHeadlessMissing.length === 0,
+    `${NAME}/headless loads through require() too`,
+    r.errors.cjsHeadlessExports ?? `missing: ${cjsHeadlessMissing.join(', ')}`
+  );
+  check(
+    !(r.headlessExports ?? []).includes('ToastContainer'),
+    `${NAME}/headless does not pull in the built-in components`
+  );
+  check(
+    r.headlessSource != null &&
+      !r.headlessSource.includes('@keyframes rct-') &&
+      !r.headlessSource.includes('data-rct-styled'),
+    `${NAME}/headless carries no stylesheet`,
+    'the CSS string leaked into the headless bundle'
   );
 
   // 4. the stylesheet must travel inside the JS ------------------------------

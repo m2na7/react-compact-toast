@@ -62,7 +62,7 @@ const pkg = JSON.parse(
   await readFile(new URL('./package.json', import.meta.url), 'utf8')
 ) as { version: string };
 
-export default defineConfig({
+const shared = {
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
   platform: 'browser',
@@ -91,7 +91,25 @@ export default defineConfig({
   // otherwise report it as an unresolvable module.
   attw: { excludeEntrypoints: ['./styles.css'] },
   publint: true,
-  // Also writes dist/styles.css for consumers that opt out of runtime
-  // injection (`import 'react-compact-toast/styles.css'`).
-  plugins: [inlineCss({ emitAs: 'styles.css' })],
-});
+} as const;
+
+export default defineConfig([
+  {
+    ...shared,
+    entry: ['src/index.ts'],
+    // Also writes dist/styles.css for consumers that opt out of runtime
+    // injection (`import 'react-compact-toast/styles.css'`).
+    plugins: [inlineCss({ emitAs: 'styles.css' })],
+  },
+  {
+    // Built separately, not as a second entry of the bundle above: a shared
+    // chunk would make the default import pay ~0.6 kB for a split it never
+    // uses. The two bundles duplicate the store's code, but the store itself
+    // is a single instance registered on globalThis, so state stays shared.
+    ...shared,
+    entry: ['src/headless.ts'],
+    attw: false,
+    publint: false,
+    plugins: [inlineCss()],
+  },
+]);

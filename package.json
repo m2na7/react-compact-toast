@@ -39,11 +39,22 @@
         "default": "./dist/index.js"
       }
     },
+    "./headless": {
+      "import": {
+        "types": "./dist/headless.d.mts",
+        "default": "./dist/headless.mjs"
+      },
+      "require": {
+        "types": "./dist/headless.d.ts",
+        "default": "./dist/headless.js"
+      }
+    },
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "headless"
   ],
   "scripts": {
     "build": "tsdown",
@@ -62,6 +73,7 @@
     "check": "pnpm lint && pnpm format:check && pnpm type-check && pnpm test && pnpm build && pnpm test:package",
     "playground": "pnpm --filter playground dev",
     "playground:build": "pnpm --filter playground build",
+    "prepack": "pnpm build",
     "prepare": "lefthook install"
   },
   "prettier": {
