@@ -1,19 +1,72 @@
-name: Bug Report
-description: Report a bug
-title: '[BUG] '
+name: Bug report
+description: Something does not work the way the docs say it should
+title: '[bug] '
 labels: ['bug']
 body:
-  - type: textarea
-    id: description
+  - type: markdown
     attributes:
-      label: Description
-      description: Describe the bug
+      value: |
+        Thanks for the report. A runnable reproduction saves the most time:
+        a StackBlitz, a CodeSandbox, or a minimal repository.
+
+  - type: textarea
+    id: what-happens
+    attributes:
+      label: What happens
+      description: What you did, what you expected, and what you got instead.
     validations:
       required: true
 
-  - type: textarea
-    id: ETC
+  - type: input
+    id: reproduction
     attributes:
-      label: ETC
+      label: Reproduction
+      description: A link to a StackBlitz, CodeSandbox, or repository.
+      placeholder: https://stackblitz.com/edit/...
+    validations:
+      required: false
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Relevant code
+      description: The `toast()` call and the `<ToastContainer />` you use.
+      render: tsx
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: react-compact-toast version
+      placeholder: 0.3.0
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: React and bundler
+      description: React version, plus your framework or bundler and its version.
+      placeholder: React 19.2, Next.js 16.3 (App Router)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: styling
+    attributes:
+      label: Styling setup
+      description: Anything that changes how the stylesheet is applied.
+      options:
+        - label: I pass `injectStyles={false}` and import the CSS myself
+        - label: I pass a `className` or `unstyled` to toasts
+        - label: I override `data-rct-*` selectors or `--rct-*` variables
+        - label: I use Tailwind CSS
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: Chrome 141, Safari 26
     validations:
       required: false
