@@ -1,6 +1,5 @@
 'use client'
 
-import ToastContainer from '../../../src/components/toast-container';
 import Header from './components/Hero';
 import QuickStart from './components/QuickStart';
 import InteractiveDemo from './components/InteractiveDemo';
@@ -81,7 +80,6 @@ export default function Home() {
         </div>
       </motion.div>
 
-      <ToastContainer />
     </div>
   );
 } 

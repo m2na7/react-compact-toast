@@ -31,12 +31,12 @@ export default function Features() {
   };
 
   const features = [
-    'Multiple positioning options',
-    'Fully type-safe API',
-    'Custom styling support',
-    'Works with any CSS framework',
-    'Auto-close with custom timing',
-    'Click to dismiss',
+    'Announced to screen readers, operable by keyboard',
+    'Pauses on hover, focus and hidden tabs',
+    'Promise, loading, action and update helpers',
+    'Themeable with CSS variables and data-* selectors',
+    'Server rendering and the Next.js App Router',
+    'Fully type-safe, zero dependencies',
   ];
 
   return (

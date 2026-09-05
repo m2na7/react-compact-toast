@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { toast } from '../../../../src/core/toast';
+import { toast } from 'react-compact-toast';
 import CodeBlock from './CodeBlock';
 
 export default function QuickStart() {
@@ -51,35 +51,39 @@ export default function QuickStart() {
     pnpm: 'pnpm add react-compact-toast'
   };
 
-  const basicUsageCode = `import { ToastContainer, toast } from 'react-compact-toast';
+  const basicUsageCode = `'use client'; // only needed in the Next.js App Router
+import { ToastContainer, toast } from 'react-compact-toast';
 
-function Component() {
+export default function App() {
   return (
-    <div>
-      <button onClick={() => {
-        toast({ text: "super easy!", position: "topRight" });
-      }}>
-        click me
+    <>
+      <button onClick={() => toast.success('Saved')}>
+        Save
       </button>
       <ToastContainer />
-    </div>
+    </>
   );
 }`;
 
-  const advancedUsageCode = `// Custom toast with options
-toast({
-  text: 'Custom notification',
-  icon: <Icon />,
-  highlightText: 'Custom',
-  highlightColor: '#FF6B6B',
-  autoClose: 5000,
-  closeOnClick: true,
-  position: 'topRight',
-  offset: '80px',
-  className: 'bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl'
-};
+  const advancedUsageCode = `// Semantic variants
+toast.success('Saved');
+toast.error('Could not save');
 
-// Available positions:
+// Follow a promise from start to finish
+toast.promise(save(), {
+  loading: 'Saving…',
+  success: (draft) => \`Saved as \${draft.title}\`,
+  error: (err) => \`Could not save: \${err.message}\`,
+});
+
+// Update a toast in place, or give it an action
+const id = toast.loading('Uploading…');
+toast.update(id, { type: 'success', text: 'Uploaded', autoClose: 3000 });
+
+toast('Message archived', {
+  action: { label: 'Undo', onClick: restore },
+});
+
 // 'topLeft' | 'topCenter' | 'topRight' |
 // 'bottomLeft' | 'bottomCenter' | 'bottomRight'`;
 
@@ -161,7 +165,7 @@ toast({
 
         <div className="mt-5 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
           <p className="text-emerald-700 text-sm">
-            <span className="font-medium">🎯 Pro Tip:</span> You can fully style your toasts using <code className="bg-emerald-100 px-1 rounded text-emerald-800">className</code> — Tailwind, Emotion, Vanilla CSS, or plain CSS — it's all up to you!
+            <span className="font-medium">🎯 Pro Tip:</span> You can fully style your toasts using <code className="bg-emerald-100 px-1 rounded text-emerald-800">className</code> — Tailwind, Emotion, Vanilla CSS, or plain CSS — it&apos;s all up to you!
           </p>
         </div>
       </div>
