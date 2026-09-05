@@ -1,83 +1,97 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react';
 
-import { TOAST_DEFAULT_POSITION } from '../constants';
-import { eventManager, ToastEvent, ToastPosition, ToastProps } from '../core';
+import { DEFAULT_LIMIT, DEFAULT_POSITION } from '../constants';
+import { cancelPendingEmits, subscribeToToasts } from '../core/event-manager';
+import { toastStore } from '../core/store';
+import type {
+  ToastPosition,
+  ToastPositionGroup,
+  ToastRecord,
+  UseToastContainerOptions,
+  UseToastContainerResult,
+} from '../types';
 
-type ToastPositionGroup = {
-  toasts: ToastProps[];
-  containerStyle?: React.CSSProperties;
-};
+let mountedContainers = 0;
 
-export const useToastContainer = () => {
-  const [toastList, setToastList] = useState(new Map<string, ToastProps>());
+/**
+ * Headless container behaviour: subscribes to the store, applies the
+ * `limit`, and groups visible toasts by position. Render each group's
+ * toasts with the built-in `Toast` or your own component.
+ */
+export function useToastContainer(
+  options: UseToastContainerOptions = {}
+): UseToastContainerResult {
+  const {
+    limit = DEFAULT_LIMIT,
+    position = DEFAULT_POSITION,
+    newestOnTop = false,
+  } = options;
 
-  const addToast = useCallback((props: ToastProps) => {
-    setToastList((prev) => {
-      const newMap = new Map(prev);
-      newMap.set(props.toastId, props);
-      return newMap;
-    });
-  }, []);
-
-  const deleteToast = useCallback((id: string) => {
-    setToastList((prev) => {
-      if (!prev.has(id)) return prev;
-
-      const newMap = new Map(prev);
-      newMap.delete(id);
-      return newMap;
-    });
-  }, []);
-
-  const updateToast = useCallback((id: string, text: string) => {
-    setToastList((prev) => {
-      if (!prev.has(id)) return prev;
-
-      const newMap = new Map(prev);
-      const toast = prev.get(id)!;
-      newMap.set(id, { ...toast, text });
-      return newMap;
-    });
-  }, []);
+  const snapshot = useSyncExternalStore(
+    subscribeToToasts,
+    toastStore.getSnapshot,
+    toastStore.getServerSnapshot
+  );
 
   useEffect(() => {
-    eventManager.on(ToastEvent.Add, addToast);
-    eventManager.on(ToastEvent.Delete, deleteToast);
-    eventManager.on(ToastEvent.Update, updateToast);
-
+    const previous = toastStore.getLimit();
+    toastStore.setLimit(limit);
     return () => {
-      eventManager.off(ToastEvent.Add, addToast);
-      eventManager.off(ToastEvent.Delete, deleteToast);
-      eventManager.off(ToastEvent.Update, updateToast);
-
-      eventManager.cancelEmit(ToastEvent.Add);
-      eventManager.cancelEmit(ToastEvent.Delete);
-      eventManager.cancelEmit(ToastEvent.Update);
+      toastStore.setLimit(previous);
     };
-  }, [addToast, deleteToast, updateToast]);
+  }, [limit]);
+
+  useEffect(() => {
+    mountedContainers += 1;
+    // Warns in every build. Gating this on `process.env.NODE_ENV` does not
+    // work here: the library is bundled once, so the check resolves at *our*
+    // build time and the warning would never reach anyone. Mounting two
+    // containers is always a mistake, and the warning costs one line.
+    if (mountedContainers > 1) {
+      console.warn(
+        '[react-compact-toast] More than one toast container is mounted. Every toast would render in each of them; render a single <ToastContainer /> near the root of your app.'
+      );
+    }
+    return () => {
+      mountedContainers -= 1;
+      // Nothing is left to announce to a container that is going away.
+      if (mountedContainers === 0) cancelPendingEmits();
+    };
+  }, []);
+
+  const toasts = useMemo(
+    () => (newestOnTop ? [...snapshot].reverse() : snapshot),
+    [snapshot, newestOnTop]
+  );
+
+  const groups = useMemo(() => {
+    const map = new Map<ToastPosition, ToastRecord[]>();
+    toasts.forEach((toast) => {
+      const key = toast.position ?? position;
+      const list = map.get(key);
+      if (list) list.push(toast);
+      else map.set(key, [toast]);
+    });
+    return map;
+  }, [toasts, position]);
 
   const getToastPositionGroupToRender = useCallback(() => {
-    const positionGroup = new Map<ToastPosition, ToastPositionGroup>();
-
-    toastList.forEach((toast) => {
-      const position = toast.position || TOAST_DEFAULT_POSITION;
-
-      if (!positionGroup.has(position)) {
-        positionGroup.set(position, {
-          toasts: [],
-          containerStyle: toast.containerStyle,
-        });
-      } else {
-        const existing = positionGroup.get(position)!;
-        if (toast.containerStyle && !existing.containerStyle) {
-          existing.containerStyle = toast.containerStyle;
-        }
-      }
-      positionGroup.get(position)!.toasts.push(toast);
+    const map = new Map<ToastPosition, ToastPositionGroup>();
+    groups.forEach((list, key) => {
+      map.set(key, {
+        toasts: list.map((toast) => ({ ...toast, toastId: toast.id })),
+        containerStyle: list.find((toast) => toast.containerStyle)
+          ?.containerStyle,
+      });
     });
+    return map;
+  }, [groups]);
 
-    return positionGroup;
-  }, [toastList]);
-
-  return { getToastPositionGroupToRender };
-};
+  return {
+    toasts,
+    groups,
+    dismiss: toastStore.dismiss,
+    remove: toastStore.remove,
+    getToastPositionGroupToRender,
+  };
+}

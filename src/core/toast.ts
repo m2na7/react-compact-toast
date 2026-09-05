@@ -1,75 +1,123 @@
+import { isValidElement } from 'react';
+
+import { DEFAULT_AUTO_CLOSE } from '../constants';
 import { eventManager } from './event-manager';
-import { ToastEvent, ToastProps } from '../types';
-
-type ToastOptions = Omit<ToastProps, 'toastId'>;
-
-const emitAddToast = (toastProps: ToastOptions) => {
-  const id = crypto.randomUUID();
-
-  eventManager.emit(ToastEvent.Add, {
-    ...toastProps,
-    toastId: id,
-  });
-  return id;
-};
+import { toastStore } from './store';
+import { ToastEvent } from '../types';
+import type {
+  ToastContent,
+  ToastFn,
+  ToastId,
+  ToastMessageOptions,
+  ToastOptions,
+  ToastPromiseMessages,
+  ToastShorthand,
+  ToastType,
+} from '../types';
 
 /**
- * Creates and displays a toast notification.
- *
- * @param {ToastOptions | string} options - Toast configuration options or a simple text message
- *   - If a string is provided, it will be converted to `{ text: options }`
- *   - If an object is provided, it should contain toast configuration properties:
- * @param {string} options.text - The text content to display in the toast
- * @param {React.JSX.Element | string | 'default'} [options.icon] - Icon to display in the toast:
- *   - JSX Element: Custom React component
- *   - string: Text/emoji icon
- *   - 'default': Default icon
- *   - undefined: No icon
- * @param {string} [options.highlightText] - Text to highlight with a different color
- * @param {string} [options.highlightColor] - Custom color for the highlighted text (CSS color value)
- * @param {false | number} [options.autoClose=3000] - Auto-close behavior:
- *   - `false`: Toast will not close automatically
- *   - `number`: Time in milliseconds before the toast closes automatically
- * @param {boolean} [options.closeOnClick=true] - Whether the toast should close when clicked
- * @param {ToastPosition} [options.position='bottomCenter'] - Position where the toast appears:
- *   - 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight'
- * @param {string} [options.className] - Custom CSS classes to apply to the toast
- * @param {string | number} [options.offset] - Custom offset from screen edge:
- *   - `string`: CSS value like '50px', '2rem', '5vh'
- *   - `number`: Pixel value (e.g., 50 becomes '50px')
- * @param {React.CSSProperties} [options.containerStyle] - Custom inline styles to apply to the toast container
- * @returns {string} The unique ID of the created toast
- *
- * @example
- * // Simple text toast
- * toast('Hello, world!');
- *
- * @example
- * // Toast with custom options
- * toast({
- *   text: 'Custom notification',
- *   icon: '🚀',
- *   highlightText: 'Custom',
- *   highlightColor: '#ff6b6b',
- *   autoClose: 5000,
- *   closeOnClick: true,
- *   position: 'topRight',
- *   className: 'bg-blue-500 text-white rounded-lg',
- *   offset: 50, // 50px from screen edge
- *   containerStyle: { right: '100px', top: '50px' }, // Custom container positioning
- * });
- *
- * @example
- * // Toast with custom offset
- * toast({
- *   text: 'Far from edge',
- *   position: 'topCenter',
- *   offset: '100px', // 100px from top
- * });
+ * `toast({ text })` vs `toast(<b>node</b>)`: options are a plain object —
+ * one whose prototype is `Object.prototype` — that is not a React element.
+ * Arrays, iterables, promises and elements all carry their own prototype,
+ * and a plain object is never a renderable node, so nothing that could have
+ * been content is mistaken for options.
  */
-export const toast = (options: ToastOptions | string): string => {
-  const toastOptions: ToastOptions =
-    typeof options === 'string' ? { text: options } : options;
+export function isToastOptions(value: ToastContent): value is ToastOptions {
+  if (value === null || typeof value !== 'object' || isValidElement(value)) {
+    return false;
+  }
+  const proto = Object.getPrototypeOf(value) as object | null;
+  return proto === Object.prototype || proto === null;
+}
 
-  return emitAddToast(toastOptions);
-};
+function toOptions(
+  content: ToastContent,
+  options?: ToastMessageOptions
+): ToastOptions {
+  return isToastOptions(content)
+    ? { ...options, ...content }
+    : { ...options, text: content };
+}
+
+function resolveContent<T>(
+  message: ToastContent | ((value: T) => ToastContent),
+  value: T
+): ToastContent {
+  return typeof message === 'function' ? message(value) : message;
+}
+
+function show(content: ToastContent, options?: ToastMessageOptions): ToastId {
+  const resolved = toOptions(content, options);
+  const id = resolved.id ?? toastStore.nextId();
+  eventManager.emit(ToastEvent.Add, { ...resolved, id });
+  return id;
+}
+
+const shorthand =
+  (type: ToastType): ToastShorthand =>
+  (content, options) =>
+    show(content, { ...options, type });
+
+function promise<T>(
+  promise: Promise<T>,
+  messages: ToastPromiseMessages<T>,
+  options?: ToastMessageOptions
+): Promise<T> {
+  const loading = toOptions(messages.loading);
+  const id = show(
+    { ...options, type: 'loading', ...loading, autoClose: false },
+    undefined
+  );
+  // Keys set by the loading phase (e.g. a custom spinner) are cleared unless
+  // the settled phase sets them again.
+  const clear = Object.fromEntries(
+    Object.keys(loading).map((key) => [key, undefined])
+  ) as Partial<ToastOptions>;
+  const settle = (type: ToastType, content: ToastContent) => {
+    // The user closed it while the promise was in flight: respect that
+    // instead of popping a new toast into an unrelated moment.
+    if (!toastStore.get(id)) return;
+    eventManager.emit(ToastEvent.Add, {
+      ...clear,
+      ...options,
+      autoClose: options?.autoClose ?? DEFAULT_AUTO_CLOSE,
+      type,
+      ...toOptions(content),
+      id,
+    });
+  };
+  promise.then(
+    (value) => settle('success', resolveContent(messages.success, value)),
+    (error: unknown) => settle('error', resolveContent(messages.error, error))
+  );
+  return promise;
+}
+
+/**
+ * Show a toast notification.
+ *
+ * ```ts
+ * toast('Saved');
+ * toast('Saved', { position: 'topRight' });
+ * toast.success('Saved');
+ * const id = toast.loading('Uploading…');
+ * toast.update(id, { type: 'success', text: 'Done', autoClose: 3000 });
+ * toast.dismiss(id);
+ * ```
+ *
+ * A `ToastContainer` must be mounted somewhere in the tree for toasts to be
+ * displayed; toasts created before it mounts are shown once it does.
+ */
+export const toast: ToastFn = Object.assign(show, {
+  success: shorthand('success'),
+  error: shorthand('error'),
+  info: shorthand('info'),
+  warning: shorthand('warning'),
+  loading: shorthand('loading'),
+  dismiss: (id?: ToastId) => eventManager.emit(ToastEvent.Dismiss, id),
+  remove: (id?: ToastId) => eventManager.emit(ToastEvent.Delete, id),
+  update: (id: ToastId, options: Partial<Omit<ToastOptions, 'id'>>) =>
+    eventManager.emit(ToastEvent.Update, id, options),
+  isActive: (id: ToastId) => toastStore.get(id) !== undefined,
+  promise,
+});
