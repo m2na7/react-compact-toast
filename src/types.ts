@@ -26,6 +26,13 @@ export type ToastId = string;
  * The events every toast travels through. Exported as a real enum, not a
  * `const enum`, so `ToastEvent.Add` can be used as a value — in 0.2.x it was
  * type-only and `eventManager` could not actually be called from TypeScript.
+ *
+ * An `enum` and not a `const` object, despite the reverse map an `enum` also
+ * emits. The compiler folds every internal `ToastEvent.Add` down to `0`,
+ * which leaves the object unreferenced: `headless.mjs` drops it entirely and
+ * ships numeric literals. A `const` object cannot be folded, so all fifteen
+ * call sites keep a property access and the object can never be dropped —
+ * measured at +37 B gzipped on the headless bundle.
  */
 export enum ToastEvent {
   /** A toast was raised. */

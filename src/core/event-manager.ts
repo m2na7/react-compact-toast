@@ -3,7 +3,6 @@ import type {
   EventCallbacks,
   EventManager,
   TimeoutId,
-  ToastEvent as ToastEventType,
   ToastId,
   ToastOptions,
 } from '../types';
@@ -34,14 +33,14 @@ export const eventManager: EventManager = {
     return toastStore.getSnapshot().length;
   },
 
-  on<E extends ToastEventType>(event: E, callback: EventCallbacks[E]) {
+  on<E extends ToastEvent>(event: E, callback: EventCallbacks[E]) {
     const callbacks = this.list.get(event);
     if (callbacks) callbacks.push(callback as EventCallbacks[ToastEvent]);
     else this.list.set(event, [callback as EventCallbacks[ToastEvent]]);
     return this;
   },
 
-  off<E extends ToastEventType>(event: E, callback?: EventCallbacks[E]) {
+  off<E extends ToastEvent>(event: E, callback?: EventCallbacks[E]) {
     if (!callback) {
       this.list.delete(event);
       return this;
@@ -56,10 +55,7 @@ export const eventManager: EventManager = {
     return this;
   },
 
-  emit<E extends ToastEventType>(
-    event: E,
-    ...args: Parameters<EventCallbacks[E]>
-  ) {
+  emit<E extends ToastEvent>(event: E, ...args: Parameters<EventCallbacks[E]>) {
     // Apply now, so `toast.isActive` and the limit see the real list.
     switch (event) {
       case ToastEvent.Add:
@@ -97,7 +93,7 @@ export const eventManager: EventManager = {
     this.emitQueue.set(event, [...(this.emitQueue.get(event) ?? []), timer]);
   },
 
-  cancelEmit(event: ToastEventType) {
+  cancelEmit(event: ToastEvent) {
     const timers = this.emitQueue.get(event);
     if (timers) {
       timers.forEach(clearTimeout);

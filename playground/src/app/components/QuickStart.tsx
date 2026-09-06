@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { toast } from 'react-compact-toast';
 import CodeBlock from './CodeBlock';
@@ -51,8 +53,7 @@ export default function QuickStart() {
     pnpm: 'pnpm add react-compact-toast'
   };
 
-  const basicUsageCode = `'use client'; // only needed in the Next.js App Router
-import { ToastContainer, toast } from 'react-compact-toast';
+  const basicUsageCode = `import { ToastContainer, toast } from 'react-compact-toast';
 
 export default function App() {
   return (

@@ -33,7 +33,6 @@ npm install react-compact-toast
 Mount the container once, near the root of your app, then call `toast()` from anywhere.
 
 ```jsx
-'use client'; // only needed in the Next.js App Router
 import { ToastContainer, toast } from 'react-compact-toast';
 
 export default function App() {
@@ -391,9 +390,11 @@ Nothing about `toast('…')` and `<ToastContainer />` changes. The rest:
 - **Toasts are focusable** when they respond to clicks, so they join the tab
   order.
 - **The text is a `<div>`, not a `<p>`,** because it now accepts any node.
-- **`eventManager`, `ToastEvent`, `EventManager`, `EventCallbacks` and
-  `TimeoutId` are gone.** They were unusable from TypeScript. Use
-  `toast.update` / `toast.dismiss` / `useToastContainer` instead.
+- **`eventManager` stays, and is finally usable.** `ToastEvent` was exported
+  as a type, so `eventManager.on(ToastEvent.Add, …)` did not compile; it is
+  now a value. `activeToastCount` became read-only — it is derived from the
+  toasts on screen instead of being counted separately. A `Dismiss` event
+  joins `Add`, `Delete` and `Update`.
 - **Deprecated, still working:** `highlightText` and `highlightColor` (put a
   node in `text`), per-toast `offset` and `containerStyle` (use the container
   props), `useToast(id, autoClose, closeOnClick)` (pass an options object),
