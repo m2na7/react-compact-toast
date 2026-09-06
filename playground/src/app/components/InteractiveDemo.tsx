@@ -1,4 +1,4 @@
-import { toast } from '../../../../src/core/toast';
+import { toast } from 'react-compact-toast';
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
 import ShowToastButton from './ShowToastButton';
@@ -32,63 +32,74 @@ export default function InteractiveDemo() {
   };
 
   const showPlain = () => {
-    toast({
-      text: 'Simple and clean notification',
-    });
+    toast('Simple and clean notification');
   };
 
-  const showWithIcon = () => {
-    toast({
-      text: 'Task completed successfully',
-      icon: '✓',
+  const showTypes = () => {
+    toast.success('Changes saved', { position: 'topRight' });
+    toast.error('Could not reach the server', { position: 'topRight' });
+    toast.warning('Your session expires in 5 minutes', {
       position: 'topRight',
-      className: 'backdrop-blur-md bg-emerald-500/90 text-white border border-emerald-400/30 rounded-2xl shadow-2xl px-6 py-4 font-medium',
-      autoClose: 4000,
     });
   };
 
-  const showNoAutoClose = () => {
-    toast({
-      text: 'Click to dismiss',
-      icon: '⚠',
-      position: 'topCenter',
-      className: 'backdrop-blur-md bg-amber-500/90 text-white border border-amber-400/30 rounded-2xl shadow-2xl px-6 py-4 font-medium',
-      autoClose: false,
-      closeOnClick: true,
-    });
+  const showPromise = () => {
+    const upload = new Promise<{ name: string }>((resolve, reject) =>
+      setTimeout(
+        () =>
+          Math.random() > 0.25
+            ? resolve({ name: 'report.pdf' })
+            : reject(new Error('the connection dropped')),
+        1800
+      )
+    );
+
+    toast.promise(
+      upload,
+      {
+        loading: 'Uploading…',
+        success: (file) => `Uploaded ${file.name}`,
+        error: (err) => `Upload failed: ${(err as Error).message}`,
+      },
+      { position: 'topCenter' }
+    );
   };
 
-  const showCustomOffset = () => {
-    toast({
-      text: 'Something went wrong',
-      icon: '✕',
+  const showAction = () => {
+    toast('Message archived', {
+      id: 'archived',
+      icon: '📥',
       position: 'bottomLeft',
-      containerStyle: { left: '50px', bottom: '150px' },
-      className: 'backdrop-blur-md bg-red-500/90 text-white border border-red-400/30 rounded-2xl shadow-2xl px-6 py-4 font-medium',
-      autoClose: 5000,
+      action: {
+        label: 'Undo',
+        onClick: () => toast.success('Message restored'),
+      },
     });
   };
 
-  const showWithHighlightText = () => {
-    toast({
-      text: ' has been updated. Review the changes in your dashboard.',
-      position: 'bottomRight',
-      className: 'backdrop-blur-md bg-white/95 text-neutral-900 border border-neutral-200 rounded-2xl shadow-2xl p-6 max-w-sm',
-      highlightText: 'Project status',
-      highlightColor: '#a855f7',
-      autoClose: 8000,
+  const showPersistent = () => {
+    toast('A new version is available. Reload to update.', {
+      id: 'update',
+      type: 'info',
+      position: 'topCenter',
+      autoClose: false,
+      closeOnClick: false,
+      closeButton: true,
     });
   };
 
-  const showFullyCustomizable = () => {
-    toast({
-      text: ' uploaded and processed. Click here to view details or dismiss this notification.',
-      position: 'topLeft',
-      className: 'w-80 h-24 bg-white text-gray-800 rounded-lg shadow-lg border-l-4 border-blue-500/90 p-4 flex flex-col justify-center hover:shadow-xl transition-shadow duration-200',
-      highlightText: 'Successfully',
-      highlightColor: '#3b82f6',
-      autoClose: 10000,
-    });
+  const showCustomStyle = () => {
+    toast(
+      <span>
+        <strong>report.pdf</strong> uploaded and processed.
+      </span>,
+      {
+        position: 'topLeft',
+        className:
+          'w-80 bg-white text-gray-800 rounded-lg shadow-lg border-l-4 border-blue-500 p-4',
+        autoClose: 8000,
+      }
+    );
   };
 
   return (
@@ -116,24 +127,24 @@ export default function InteractiveDemo() {
           Plain
         </ShowToastButton>
 
-        <ShowToastButton onClick={showWithIcon} color="emerald" variants={itemVariants}>
-          With icon
+        <ShowToastButton onClick={showTypes} color="emerald" variants={itemVariants}>
+          Types
         </ShowToastButton>
 
-        <ShowToastButton onClick={showNoAutoClose} color="amber" variants={itemVariants}>
-          No auto close
+        <ShowToastButton onClick={showPromise} color="amber" variants={itemVariants}>
+          Promise
         </ShowToastButton>
 
-        <ShowToastButton onClick={showCustomOffset} color="red" variants={itemVariants}>
-          Custom offset
+        <ShowToastButton onClick={showAction} color="red" variants={itemVariants}>
+          With action
         </ShowToastButton>
 
-        <ShowToastButton onClick={showFullyCustomizable} color="blue" variants={itemVariants}>
-          Fully customizable
+        <ShowToastButton onClick={showPersistent} color="blue" variants={itemVariants}>
+          Persistent
         </ShowToastButton>
 
-        <ShowToastButton onClick={showWithHighlightText} color="purple" variants={itemVariants}>
-          With highlight
+        <ShowToastButton onClick={showCustomStyle} color="purple" variants={itemVariants}>
+          Custom style
         </ShowToastButton>
       </div>
 
@@ -142,7 +153,9 @@ export default function InteractiveDemo() {
         className="mt-8 p-4 rounded-2xl bg-neutral-100/50 border border-neutral-200/50"
       >
         <p className="text-neutral-600 text-[13px] leading-relaxed">
-          <span className="font-medium text-neutral-800">Interactive Demo:</span> Click any button to see toast notifications with different styles, positions, and behaviors.
+          <span className="font-medium text-neutral-800">Try it:</span> hover a
+          toast to pause its timer, press <kbd>Alt</kbd> + <kbd>T</kbd> to focus
+          the newest one, then <kbd>Esc</kbd> to dismiss it.
         </p>
       </motion.div>
     </motion.div>

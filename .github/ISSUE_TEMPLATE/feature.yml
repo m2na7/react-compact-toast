@@ -1,19 +1,35 @@
-name: Feature Request
-description: Suggest a new feature
-title: '[FEATURE] '
+name: Feature request
+description: Suggest something the library should do
+title: '[feature] '
 labels: ['enhancement']
 body:
-  - type: textarea
-    id: description
+  - type: markdown
     attributes:
-      label: Description
-      description: What feature would you like to see?
+      value: |
+        The library aims to stay small, so every addition has to earn its
+        bytes. Describing the problem helps more than describing the API.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do that is hard or impossible today?
     validations:
       required: true
 
   - type: textarea
-    id: ETC
+    id: workaround
     attributes:
-      label: ETC
+      label: What you do instead today
+      description: The current workaround, if you have one, and why it falls short.
+    validations:
+      required: false
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API
+      description: What the call or prop would look like.
+      render: tsx
     validations:
       required: false

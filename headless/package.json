@@ -1,0 +1,9 @@
+{
+  "name": "react-compact-toast/headless",
+  "private": true,
+  "description": "Resolution shim so that `moduleResolution: node` and Node 10 style resolvers can reach the headless entry. Modern resolvers use the exports map in the root package.json instead.",
+  "main": "../dist/headless.js",
+  "module": "../dist/headless.mjs",
+  "types": "../dist/headless.d.ts",
+  "sideEffects": false
+}

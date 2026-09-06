@@ -1,0 +1,10 @@
+packages:
+  - playground
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - cypress
+  - esbuild
+  - lefthook
+  - sharp
+  - unrs-resolver

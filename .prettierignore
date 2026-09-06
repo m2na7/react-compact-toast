@@ -1,0 +1,12 @@
+dist
+coverage
+coverage-vitest
+node_modules
+pnpm-lock.yaml
+playground/.next
+# playground is not formatted yet; keep excluded rather than reformatting it
+playground
+cypress/screenshots
+cypress/videos
+cypress/downloads
+.omc

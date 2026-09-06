@@ -1,5 +1,12 @@
-@import 'tailwindcss';
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css');
+@import 'tailwindcss';
+/*
+ * Tailwind puts its utilities in `@layer utilities`, and unlayered CSS beats
+ * every layered rule. Importing the toast stylesheet into a layer keeps
+ * utilities on top, so `className` on a toast behaves as expected. Paired
+ * with `<ToastContainer injectStyles={false} />` in app/layout.tsx.
+ */
+@import 'react-compact-toast/styles.css' layer(components);
 
 :root {
   font-family:

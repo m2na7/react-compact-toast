@@ -2,72 +2,142 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
-    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Only browser-tests needs the Cypress binary; it installs it explicitly (cached).
+  CYPRESS_INSTALL_BINARY: 0
 
 jobs:
-  quality:
-    name: Check quality
+  lint:
+    name: Lint & format
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    strategy:
-      matrix:
-        command: ['type-check', 'format:check', 'build:lib', 'build']
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
-          run_install: false
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm format:check
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+  type-check:
+    name: Type check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm type-check
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+  test:
+    name: Unit tests (React ${{ matrix.react }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        react: [18, 19]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Switch to React 18
+        if: matrix.react == 18
+        run: pnpm add -D -w react@18 react-dom@18 @types/react@18 @types/react-dom@18
+      - run: pnpm test
 
-      - name: Run command
-        run: pnpm run ${{ matrix.command }}
-        continue-on-error: ${{ matrix.command == 'build:lib' }}
+  build:
+    name: Build & package check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm test:package
 
-  check-bundle-size:
-    name: Bundle size check
+  browser-tests:
+    name: Browser tests (Cypress)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Cache Cypress binary
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
+      - run: pnpm install --frozen-lockfile
+      - name: Install Cypress binary
+        run: pnpm exec cypress install
+        env:
+          CYPRESS_INSTALL_BINARY: ''
+      - run: pnpm test:browser
+
+  bundle-size:
+    name: Bundle size
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     permissions:
       contents: read
       pull-requests: write
-    needs: quality
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+          node-version: 22
+          cache: pnpm
+      - uses: preactjs/compressed-size-action@v2
         with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Check library bundle size
-        uses: preactjs/compressed-size-action@v2
-        with:
-          build-script: 'build:lib'
-          pattern: './dist/index.{js,mjs}'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          build-script: build
+          pattern: './dist/{index.js,index.mjs,headless.mjs,styles.css}'
           exclude: '{**/*.map,**/node_modules/**}'
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:coverage
+      - uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+          flags: unit
+          fail_ci_if_error: true

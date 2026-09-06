@@ -1,42 +1,50 @@
-# 🍞 React Compact Toast - Vite Playground
+# React Compact Toast Playground
 
-Modern Vite-powered playground for testing `react-compact-toast` library.
+A [Next.js](https://nextjs.org) (App Router) playground for `react-compact-toast`. It doubles as the
+public demo site.
 
-## 🚀 Quick Start
+## Quick start
 
 ```bash
-# From the root directory
-pnpm run playground
+# from the repository root
+pnpm install
+pnpm build          # builds the library into dist/
+pnpm playground     # next dev
 
-# Or directly in playground
-cd playground
-pnpm run dev
+# or directly inside playground/
+pnpm dev
 ```
 
-## 🧪 Features
+## How it consumes the library
 
-- **⚡ Vite** - Lightning fast development with HMR
-- **🔥 Live Toast Testing** - Real-time testing of all toast features
-- **🎨 Beautiful UI** - Modern gradient design with smooth animations
-- **📱 Responsive** - Works perfectly on all devices
-- **🔧 Hot Reload** - Changes to library source code reflect immediately
+The playground depends on the library through the pnpm workspace
+(`"react-compact-toast": "workspace:*"`), so it imports the **built** package
+exactly like a real consumer would:
 
-## 🎯 Test Cases
+```tsx
+import { ToastContainer, toast } from 'react-compact-toast';
+```
 
-- Simple toast notifications
-- Custom icons and positions
-- Auto-close vs manual close
-- Multiple toasts at once
-- Different animation styles
-- Custom styling and themes
+Consequences:
 
-## 🛠️ Development
+- Run `pnpm build` (or `pnpm dev` for watch mode) at the root after changing
+  library source. The playground picks up whatever the last build wrote.
+- No manual stylesheet import is needed. `<ToastContainer />` injects the
+  built-in styles, and the playground relies on that on purpose to catch
+  packaging regressions.
 
-This playground imports the library source code directly from `../src`, so any changes to the main library are immediately reflected without rebuilding.
+## Scripts
 
-Perfect for:
+| Script               | What it does                                             |
+| -------------------- | -------------------------------------------------------- |
+| `pnpm dev`           | Start the Next.js dev server                             |
+| `pnpm build`         | Production build (`next build`)                          |
+| `pnpm start`         | Serve the production build                               |
+| `pnpm lint`          | ESLint (flat config via `eslint-config-next`)            |
+| `pnpm build:vercel`  | Build the library, then the playground, for Vercel       |
 
-- Feature development
-- Bug testing
-- UI/UX experimentation
-- Performance testing
+## Deploying
+
+Vercel builds from the repository root (`vercel.json`), which runs
+`pnpm build && pnpm --filter playground build`. `playground/vercel.json` mirrors
+that through `build:vercel` for a Vercel project rooted at `playground/`.
