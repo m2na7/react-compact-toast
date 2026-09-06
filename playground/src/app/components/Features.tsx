@@ -80,10 +80,6 @@ export default function Features() {
             <span>Headless entry</span>
             <span className="font-medium">3.1 kB</span>
           </div>
-          <div className="flex items-center justify-between text-[13px] text-neutral-600">
-            <span>Dependencies</span>
-            <span className="font-medium">Zero</span>
-          </div>
         </div>
       </motion.div>
     </motion.div>
