@@ -33,7 +33,6 @@ npm install react-compact-toast
 Mount the container once, near the root of your app, then call `toast()` from anywhere.
 
 ```jsx
-'use client'; // only needed in the Next.js App Router
 import { ToastContainer, toast } from 'react-compact-toast';
 
 export default function App() {
