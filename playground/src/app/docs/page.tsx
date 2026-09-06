@@ -266,6 +266,7 @@ const NAV = [
   ['styling', 'Styling'],
   ['ssr', 'Server rendering'],
   ['a11y', 'Accessibility'],
+  ['events', 'Listening to toasts'],
   ['headless', 'Headless'],
 ] as const;
 
@@ -549,9 +550,39 @@ export default function RootLayout({ children }) {
             </ul>
           </Section>
 
+          <Section id="events" title="Listening to toasts">
+            <p>
+              Every toast travels through <code>eventManager</code>, the
+              publish–subscribe hub that lets <code>toast()</code> reach the
+              container without a context or a provider. You can subscribe to it
+              too — for analytics, logging, or a renderer of your own.
+            </p>
+            <CodeBlock language="ts">{`import { eventManager, ToastEvent } from 'react-compact-toast';
+
+function log(id) {
+  console.log('closed', id);
+}
+
+eventManager.on(ToastEvent.Delete, log);
+const off = () => eventManager.off(ToastEvent.Delete, log);`}</CodeBlock>
+            <p>
+              Events are <code>ToastEvent.Add</code>, <code>Dismiss</code>,{' '}
+              <code>Delete</code> and <code>Update</code>. The change is applied
+              as soon as it is published, but callbacks run a tick later, so a
+              subscriber never runs inside the publisher&apos;s stack.{' '}
+              <code>activeToastCount</code> is read-only: it is derived from the
+              toasts on screen rather than counted separately.
+            </p>
+          </Section>
+
           <Section id="headless" title="Headless usage">
-            <p>Build your own toast component on the same behaviour.</p>
-            <CodeBlock language="tsx">{`import { useToast, useToastContainer } from 'react-compact-toast';
+            <p>
+              Build your own toast component on the same behaviour. Import from{' '}
+              <code>react-compact-toast/headless</code> and the built-in
+              component, its icons and the stylesheet stay out of your bundle —
+              3.1 kB gzipped instead of 7.0 kB.
+            </p>
+            <CodeBlock language="tsx">{`import { useToast, useToastContainer } from 'react-compact-toast/headless';
 
 function MyToast({ toast: record }) {
   const { toastProps, dismiss } = useToast(record.id);

@@ -73,8 +73,12 @@ export default function Features() {
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between text-[13px] text-neutral-600">
-            <span>Bundle size</span>
-            <span className="font-medium">~2kB</span>
+            <span>Bundle size (gzip)</span>
+            <span className="font-medium">7.0 kB</span>
+          </div>
+          <div className="flex items-center justify-between text-[13px] text-neutral-600">
+            <span>Headless entry</span>
+            <span className="font-medium">3.1 kB</span>
           </div>
           <div className="flex items-center justify-between text-[13px] text-neutral-600">
             <span>Dependencies</span>
