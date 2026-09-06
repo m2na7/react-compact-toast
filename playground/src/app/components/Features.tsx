@@ -31,12 +31,12 @@ export default function Features() {
   };
 
   const features = [
-    'Announced to screen readers, operable by keyboard',
-    'Pauses on hover, focus and hidden tabs',
-    'Promise, loading, action and update helpers',
-    'Themeable with CSS variables and data-* selectors',
-    'Server rendering and the Next.js App Router',
-    'Fully type-safe, zero dependencies',
+    'Screen reader and keyboard ready',
+    'Pauses on hover and focus',
+    'Promise and loading helpers',
+    'Multiple positioning options',
+    'Works with any CSS framework',
+    'Fully type-safe API',
   ];
 
   return (
