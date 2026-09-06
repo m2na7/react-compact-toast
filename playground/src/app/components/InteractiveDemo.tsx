@@ -1,36 +1,9 @@
+'use client';
+
 import { toast } from 'react-compact-toast';
-import { motion, useInView } from 'motion/react';
-import { useRef } from 'react';
 import ShowToastButton from './ShowToastButton';
 
 export default function InteractiveDemo() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5
-      }
-    }
-  };
-
   const showPlain = () => {
     toast('Simple and clean notification');
   };
@@ -103,61 +76,51 @@ export default function InteractiveDemo() {
   };
 
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={containerVariants}
+    <div
       className="backdrop-blur-xl bg-white/60 border border-neutral-200/50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-neutral-900/5"
     >
-      <motion.div
-        variants={itemVariants}
-        className="mb-8"
-      >
+      <div className="mb-8">
         <h2 className="text-2xl font-medium text-neutral-900 mb-2">
           Toast Showcase
         </h2>
         <p className="text-neutral-600 text-sm leading-relaxed">
           Experience different notification styles and interactions
         </p>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <ShowToastButton onClick={showPlain} color="neutral" variants={itemVariants}>
+        <ShowToastButton onClick={showPlain} color="neutral">
           Plain
         </ShowToastButton>
 
-        <ShowToastButton onClick={showTypes} color="emerald" variants={itemVariants}>
+        <ShowToastButton onClick={showTypes} color="emerald">
           Types
         </ShowToastButton>
 
-        <ShowToastButton onClick={showPromise} color="amber" variants={itemVariants}>
+        <ShowToastButton onClick={showPromise} color="amber">
           Promise
         </ShowToastButton>
 
-        <ShowToastButton onClick={showAction} color="red" variants={itemVariants}>
+        <ShowToastButton onClick={showAction} color="red">
           With action
         </ShowToastButton>
 
-        <ShowToastButton onClick={showPersistent} color="blue" variants={itemVariants}>
+        <ShowToastButton onClick={showPersistent} color="blue">
           Persistent
         </ShowToastButton>
 
-        <ShowToastButton onClick={showCustomStyle} color="purple" variants={itemVariants}>
+        <ShowToastButton onClick={showCustomStyle} color="purple">
           Custom style
         </ShowToastButton>
       </div>
 
-      <motion.div
-        variants={itemVariants}
-        className="mt-8 p-4 rounded-2xl bg-neutral-100/50 border border-neutral-200/50"
-      >
+      <div className="mt-8 p-4 rounded-2xl bg-neutral-100/50 border border-neutral-200/50">
         <p className="text-neutral-600 text-[13px] leading-relaxed">
           <span className="font-medium text-neutral-800">Try it:</span> hover a
           toast to pause its timer, press <kbd>Alt</kbd> + <kbd>T</kbd> to focus
           the newest one, then <kbd>Esc</kbd> to dismiss it.
         </p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 } 

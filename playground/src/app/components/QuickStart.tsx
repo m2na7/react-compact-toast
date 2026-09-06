@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { toast } from 'react-compact-toast';
 import CodeBlock from './CodeBlock';
