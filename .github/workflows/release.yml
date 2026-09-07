@@ -109,9 +109,15 @@ jobs:
             gh release create "v$VERSION" --title "v$VERSION" --generate-notes
           fi
 
+      # Publishing goes through npm's trusted publishing: npm trusts this
+      # workflow's OIDC identity directly, so there is no token to store or
+      # rotate. Node 22 bundles npm 10, which predates OIDC support, so the
+      # CLI has to come up to 11.5.1 or later first.
+      - name: Update npm for trusted publishing
+        run: npm install -g npm@latest
+
       # `prepack` rebuilds after the bump, so the version baked into the
-      # bundle matches the one being published.
+      # bundle matches the one being published. Provenance is signed from the
+      # same OIDC identity that authorises the publish.
       - name: Publish to npm
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_PUBLISH_KEY_NPM }}
